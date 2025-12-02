@@ -1,2 +1,3 @@
 yuhangP -- 2025-12-01 22:08
 - created devlog & necessary files and folders
+- add design doc
