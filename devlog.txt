@@ -3,7 +3,7 @@ yuhangP -- 2025-12-01 22:08
 - add design doc
 
 yuhangP -- 2025-12-02 21:40
-- updated design doc
+INITIAL DD REVIEW
 - __init__.py will also contain the routes and added a register/login & home page
 - user table will store # of wins and losses and maybe profile picture & updated the user table database
 - added Purgomalum api that filters bad words better
