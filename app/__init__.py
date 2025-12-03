@@ -15,7 +15,7 @@ import sqlite3
 DB_FILE="discobandit.db"
 
 db = sqlite3.connect(DB_FILE)
-c = db.cursor()      
+c = db.cursor()
 
 app = Flask(__name__)
 app.secret_key = "secret"
@@ -45,7 +45,7 @@ def register():
             db.close()
             return render_template("register.html", error="Username already exists")
 
-        c.execute("INSERT INTO users (name, bio, password) VALUES (?, ?, ?)", (username, "temp bio", password))
+        c.execute("INSERT INTO users (name, password, wins, losses, profile_pic) VALUES (?, ?, ?, ?, ?)", (username, "temp bio", password, 0, 0, "changethis"))
         db.commit()
         db.close()
 
@@ -83,3 +83,8 @@ def login():
         return redirect(url_for("home"))
 
     return render_template('login.html')
+
+
+if __name__=='__main__':
+    app.debug = True
+    app.run()
