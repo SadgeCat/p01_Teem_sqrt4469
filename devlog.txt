@@ -9,3 +9,7 @@ INITIAL DD REVIEW
 - added Purgomalum api that filters bad words better
 - updated component map replacing routes.py with __init__.py and illustrated that we will also be styling using our own CSS on top of bootstrap
 - updated site map to match the html templates we plan on adding
+
+thomasmM -- 2025-12-03 11:19
+- added description of project in the README
+- added files for the keys of the API's
