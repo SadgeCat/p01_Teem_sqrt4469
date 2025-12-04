@@ -12,6 +12,8 @@ from flask import redirect, url_for
 
 import sqlite3
 
+from apis import get_random_profile_pic
+
 DB_FILE="discobandit.db"
 
 db = sqlite3.connect(DB_FILE)
@@ -45,7 +47,8 @@ def register():
             db.close()
             return render_template("register.html", error="Username already exists")
 
-        c.execute("INSERT INTO users (name, password, wins, losses, profile_pic) VALUES (?, ?, ?, ?, ?)", (username, "temp bio", password, 0, 0, "changethis"))
+        profile_pic = get_random_profile_pic()
+        c.execute("INSERT INTO users (name, password, wins, losses, profile_pic) VALUES (?, ?, ?, ?, ?)", (username, password, 0, 0, profile_pic))
         db.commit()
         db.close()
 
@@ -83,6 +86,27 @@ def login():
         return redirect(url_for("home"))
 
     return render_template('login.html')
+
+@app.route("/home", methods=['GET', 'POST'])
+def home():
+    if "username" not in session:
+        return redirect(url_for('login'))
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+
+    user = session["username"]
+    wins, losses, profile_pic = c.execute("SELECT wins, losses, profile_pic FROM users WHERE name=?", (user,)).fetchone()
+
+    return render_template('home.html',
+                           username = user,
+                           wins = wins,
+                           losses = losses,
+                           profile_pic = profile_pic)
+
+@app.route("/logout")
+def logout():
+    session.pop('username', None) # remove username from session
+    return redirect(url_for('login'))
 
 
 if __name__=='__main__':

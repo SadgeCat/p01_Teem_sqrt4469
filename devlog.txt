@@ -13,3 +13,13 @@ INITIAL DD REVIEW
 thomasmM -- 2025-12-03 11:19
 - added description of project in the README
 - added files for the keys of the API's
+
+yuhangP -- 2025-12-03 11:21
+Everyone in TEAM
+- created the python files and HTML templates we need
+- made login/register pages
+- create user table in build_db.py
+
+yuhangP - 2025-12-03 21:11
+- called pokeapi to get a random pokemon pic as the user's profile picture
+- added logout and basic info to homepage
