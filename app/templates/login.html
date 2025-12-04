@@ -1,29 +1,37 @@
+<!--
+    Yuhang Pan (PM), Matthew Ciu, Michelle Chen, Thomas Mackey
+    Hero Wars by Teem_sqrt4469
+    SoftDev
+    P01: ArRESTed Development
+    Dec 2025
+-->
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+<head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="../static/style.css">
     <title>Login</title>
-  </head>
-  <body>
+</head>
+<body>
     <h2>Enter username and password to login</h2>
     <form method="post">
-      <label for="username">Username:</label>
-      <br>
-      <input type="text" name="username" id="username">
-      <br>
-      <br>
-      <label for="password">Password:</label>
-      <br>
-      <input type="password" name="password" id="password">
-      <br>
-      <br>
-      <input type="submit" value="Login">
+        <label for="username">Username:</label>
+        <br>
+        <input type="text" name="username" id="username">
+        <br>
+        <br>
+        <label for="password">Password:</label>
+        <br>
+        <input type="password" name="password" id="password">
+        <br>
+        <br>
+        <input type="submit" value="Login">
     </form>
     {% if error %}
-      <h3>{{ error }}</h3>
+        <h3>{{ error }}</h3>
     {% endif %}
     <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a>.</p>
 
-  </body>
+</body>
 </html>

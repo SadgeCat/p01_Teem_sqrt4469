@@ -2,7 +2,7 @@
 # Hero Wars by Teem_sqrt4469
 # SoftDev
 # P01: ArRESTed Development
-# 2025-12-03
+# Dec 2025
 
 from flask import Flask
 from flask import render_template
