@@ -103,6 +103,18 @@ def home():
                            losses = losses,
                            profile_pic = profile_pic)
 
+@app.route("/menu", methods=['GET', 'POST'])
+def menu():
+    return render_template('menu.html')
+
+@app.route("/game", methods=['GET', 'POST'])
+def menu():
+    return render_template('game.html')
+
+@app.route("/gameover", methods=['GET', 'POST'])
+def menu():
+    return render_template('gameover.html')
+
 @app.route("/logout")
 def logout():
     session.pop('username', None) # remove username from session

@@ -27,3 +27,7 @@ yuhangP -- 2025-12-03 21:11
 yuhangP -- 2025-12-04 11:45
 Work done in class:
 - added tentative run-down of key situation for each API in readme
+
+yuhangP -- 2025-12-04 21:58
+- added routes to all the pages + very basic components to menu and some styling
+- functions to fetch a pokemon & superhero

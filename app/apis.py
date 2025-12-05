@@ -15,3 +15,24 @@ def get_random_profile_pic():
 
     imgurl = result["sprites"]["other"]["official-artwork"]["front_default"]
     return imgurl
+
+def get_pokemon(id):
+    if id == 0: 
+        id = random.randint(1,1025)
+    with urllib.request.urlopen(f"https://pokeapi.co/api/v2/pokemon/{id}/") as response:
+        data = response.read()
+    result = json.loads(data.decode('utf-8'))
+    return result
+
+def get_superhero(id):
+    if id == 0: 
+        id = random.randint(1,613)
+    with open("keys/key_SuperheroAPI.txt") as file:
+        superhero_key = file.read()
+    with urllib.request.urlopen(f"https://www.superheroapi.com/api.php/{superhero_key}/{id}") as response:
+        data = response.read()
+    result = json.loads(data.decode('utf-8'))
+    return result
+
+def get_historical_figure():
+    return 0
