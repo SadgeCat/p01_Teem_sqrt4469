@@ -108,11 +108,11 @@ def menu():
     return render_template('menu.html')
 
 @app.route("/game", methods=['GET', 'POST'])
-def menu():
+def game():
     return render_template('game.html')
 
 @app.route("/gameover", methods=['GET', 'POST'])
-def menu():
+def gameover():
     return render_template('gameover.html')
 
 @app.route("/logout")
