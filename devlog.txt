@@ -20,6 +20,10 @@ Everyone in TEAM
 - made login/register pages
 - create user table in build_db.py
 
-yuhangP - 2025-12-03 21:11
+yuhangP -- 2025-12-03 21:11
 - called pokeapi to get a random pokemon pic as the user's profile picture
 - added logout and basic info to homepage
+
+yuhangP -- 2025-12-04 11:45
+Work done in class:
+- added tentative run-down of key situation for each API in readme

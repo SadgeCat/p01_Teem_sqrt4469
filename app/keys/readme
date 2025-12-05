@@ -1,4 +1,5 @@
 SuperheroAPI
+- Requires you to login with your GitHub account to get an access token or key.
  
 PantheonAPI
 - Doesn't require a key.
