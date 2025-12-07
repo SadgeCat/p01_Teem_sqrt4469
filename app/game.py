@@ -4,8 +4,7 @@
 # P01: ArRESTed Development
 # Dec 2025
 import random
-from apis import get_pokemon
-from apis import get_superhero
+from apis import get_pokemon, get_superhero
 
 url = "https://pokeapi.co/api/v2/pokemon/"
 
@@ -35,7 +34,7 @@ def random_poke(player):
     while x <= 5:
         # create pokemon obj WHERE
         id = random.randomint(1, 1025)
-        getpokemon(id)
+        get_pokemon(id)
         #create adding to list here
         player.list[x] =
 

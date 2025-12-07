@@ -36,3 +36,6 @@ yuhangP -- 2025-12-05 11:43
 Work done in class:
 - fixed routes in __init__.py
 - updated player and pokemon classes in game.py & imported random selecting func from apis
+
+yuhangP -- 2025-12-06 20:43
+- functions in apis.py to fetch superhero & anime character data and converted them to in-game stats
