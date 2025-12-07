@@ -33,3 +33,7 @@ python app/build_db.py
 ```
 python app/__init__.py
 ```
+3. In a browser, open the running app on
+```
+http://127.0.0.1:5000
+```
