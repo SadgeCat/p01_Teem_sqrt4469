@@ -25,8 +25,11 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 # Launch Codes
-1. Create database and launch app
+1. Create database
 ```
 python app/build_db.py
+```
+2. Launch app
+```
 python app/__init__.py
 ```
