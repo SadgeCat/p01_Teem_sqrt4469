@@ -42,3 +42,6 @@ yuhangP -- 2025-12-06 20:43
 
 yuhangP -- 2025-12-06 21:21
 - add requirements.txt
+
+yuhangP -- 2025-12-07 16:12
+- add install guide and launch code to readme
