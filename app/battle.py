@@ -27,7 +27,7 @@ def make_random_fighter():
     source = random.choice(["superhero", "anime"])
 
     if source == "superhero":
-        base = get_superhero(0)     r
+        base = get_superhero(0)
     else:
         base = get_anime_character(0)
 

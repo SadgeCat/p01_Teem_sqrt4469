@@ -5,41 +5,22 @@
 # Dec 2025
 import random
 from apis import get_pokemon, get_superhero
+from battle import make_random_fighter
 
 url = "https://pokeapi.co/api/v2/pokemon/"
-
-class pokemon:
-    id: int
-    skin: str
-    health: int
-    pic: str
-
+"""
 class player:
-    id: int
-    list: list # list of pokemon on their team
-    poke_out: int
-
-    def action(poke_out, move):
-        get_pokemon()
-
-def intialize():
-    p1 = player()
-    p1.id = 1
-
-
-    p2 = player()
-
-def random_poke(player):
+    def __init__(self, list):
+        self.list = list # list of pokemon on their team
+"""
+def random_team():
     x = 0
+    list = []
     while x <= 5:
-        # create pokemon obj WHERE
-        id = random.randomint(1, 1025)
-        get_pokemon(id)
-        #create adding to list here
-        player.list[x] =
+        hero = make_random_fighter()
+        list.append(hero)
+    return list
 
+# gamer = player()
 
-    get_pokemon()
-# return pokemon
-
-print(get_pokemon(150))
+random_team()
