@@ -15,14 +15,38 @@
     <title>Hero Wars</title>
 </head>
 <body>
-    <h1>Welcome to HERO WARS</h1>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Hero Wars</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+      </li>
+    </ul>
+  </div>
+</nav>
     <img src="{{ profile_pic }}" alt="pic">
-    <h3>Hi {{ username }},</h3>
-    <p>you have {{ wins }} wins and {{ losses }} lossess.</p>
-    <a href="{{ url_for('menu') }}">Go play a game!</a>
+  <div class="jumbotron">
+     <h1 class="display-4">Hi {{ username }},</h1>
+    <p class="lead">you have {{ wins }} wins and {{ losses }} lossess.</p>
+    <hr class="my-4">
+      <p class="lead">
+    <a href="{{ url_for('menu') }}"><button type="button" class="btn btn-primary ">Play!</button></a>
+
     <br><br>
-    <a href="{{ url_for('logout') }}">Logout</a>
-    
+    <a href="{{ url_for('logout') }}"><button type="button" class="btn btn-danger">Log out</button></a>
+    </p>
+  </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
