@@ -48,3 +48,8 @@ yuhangP -- 2025-12-07 16:12
 
 thomasM -- 2025-12-07 21:58
 - added battle.py and created game mechanics for how in-game battles are going to work
+
+yuhangP -- 2025-12-07 11:45
+Work done in class:
+- michelle added bootstrap framework to the home page
+- matthew worked on game.py 
