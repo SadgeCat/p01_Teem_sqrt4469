@@ -4,7 +4,7 @@
 # P01: ArRESTed Development
 # Dec 2025
 
-import json, urllib.request
+import json, urllib.request, time
 import random
 
 def get_random_profile_pic():
@@ -24,6 +24,11 @@ def get_pokemon(id):
     result = json.loads(data.decode('utf-8'))
     return result
 
+def check_stat(val):
+    if val is None or (isinstance(val, str) and not val.isdigit()):
+        return random.randint(1, 100)
+    return int(val)
+
 def get_superhero(id):
     if id == 0: 
         id = random.randint(1,613)
@@ -33,10 +38,10 @@ def get_superhero(id):
         data = response.read()
     result = json.loads(data.decode('utf-8'))
     stats = result["powerstats"]
-    hp = stats["durability"] if not None else random.randint(1,100)
-    atk = stats["power"] if not None else random.randint(1,100)
-    speed = stats["speed"] if not None else random.randint(1,100)
-    defense = stats["strength"] if not None else random.randint(1,100)
+    hp = check_stat(stats["durability"])
+    atk = check_stat(stats["power"])
+    speed = check_stat(stats["speed"])
+    defense = check_stat(stats["strength"])
 
     return {
         "name": result["name"],
@@ -47,21 +52,32 @@ def get_superhero(id):
         "def": defense
     }
 
+def check_rate(url):
+    while True:
+        try:
+            with urllib.request.urlopen(url) as response:
+                return response.read()
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                print("reached quota! waiting 3 seconds...")
+                time.sleep(3)
+            else:
+                raise
+
 def get_anime_character(id):
     if id == 0: 
         id = random.randint(1,612)
     count = id % 25
     page = id // 25
-    with urllib.request.urlopen(f"https://api.jikan.moe/v4/characters?order_by=favorites&sort=desc&limit={count}&page={page}") as response:
-        data = response.read()
+
+    data = check_rate(f"https://api.jikan.moe/v4/characters?order_by=favorites&sort=desc&limit={count}&page={page}")
     result = json.loads(data.decode('utf-8'))["data"]
 
     chosen = random.choice(result)
     mal_id = chosen["mal_id"]
 
-    with urllib.request.urlopen(f"https://api.jikan.moe/v4/characters/{mal_id}/full") as response:
-        data = response.read()
-    character = json.loads(data.decode('utf-8'))["data"]
+    data2 = check_rate(f"https://api.jikan.moe/v4/characters/{mal_id}/full")
+    character = json.loads(data2.decode('utf-8'))["data"]
 
     return {
         "name": character["name"],

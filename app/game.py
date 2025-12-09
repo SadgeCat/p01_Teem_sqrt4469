@@ -19,6 +19,8 @@ def random_team():
     while x <= 5:
         hero = make_random_fighter()
         list.append(hero)
+        x+=1
+    print(list)
     return list
 
 # gamer = player()

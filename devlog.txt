@@ -49,7 +49,11 @@ yuhangP -- 2025-12-07 16:12
 thomasM -- 2025-12-07 21:58
 - added battle.py and created game mechanics for how in-game battles are going to work
 
-yuhangP -- 2025-12-07 11:45
+yuhangP -- 2025-12-08 11:45
 Work done in class:
 - michelle added bootstrap framework to the home page
 - matthew worked on game.py 
+
+yuhangP -- 2025-12-08 20:16
+- fixed function getting 6 random characters
+- added checks to make sure stats aren't null and check quotas to not get purple screen of death
