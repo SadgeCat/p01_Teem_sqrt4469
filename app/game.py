@@ -8,11 +8,11 @@ from apis import get_pokemon, get_superhero
 from battle import make_random_fighter
 
 url = "https://pokeapi.co/api/v2/pokemon/"
-"""
+
 class player:
-    def __init__(self, list):
-        self.list = list # list of pokemon on their team
-"""
+    def __init__(self):
+        self.list = random_team()
+
 def random_team():
     x = 0
     list = []
@@ -20,9 +20,14 @@ def random_team():
         hero = make_random_fighter()
         list.append(hero)
         x+=1
+    return list
+
+def re_roll(list, x):
+    hero = make_random_fighter()
+    list[x] = hero
     print(list)
     return list
 
-# gamer = player()
+playerone = player()
 
-random_team()
+print(playerone.list)
