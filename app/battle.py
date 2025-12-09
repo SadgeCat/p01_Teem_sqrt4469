@@ -80,7 +80,6 @@ def apply_move(state, move_key):
     power = move["power"]
 
     # Damage formula:
-    # damage = move power + small part of attacker's atk - small part of defender's def
     damage = attacker["atk"] - (math.log10(defender["def"])/10 + 0.003*defender["def"])
 
     if damage < 1:
