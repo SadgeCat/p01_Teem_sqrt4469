@@ -17,7 +17,7 @@ def get_random_profile_pic():
     return imgurl
 
 def get_pokemon(id):
-    if id == 0: 
+    if id == 0:
         id = random.randint(1,1025)
     with urllib.request.urlopen(f"https://pokeapi.co/api/v2/pokemon/{id}/") as response:
         data = response.read()
@@ -29,8 +29,14 @@ def check_stat(val):
         return random.randint(1, 100)
     return int(val)
 
+def check_key(url, key):
+    with urllib.request.urlopen(f"{url}/{key}/") as response:
+        data = response.read()
+    result = json.loads(data.decode('utf-8'))
+    return result["response"] == "error"
+
 def get_superhero(id):
-    if id == 0: 
+    if id == 0:
         id = random.randint(1,613)
     with open("keys/key_SuperheroAPI.txt") as file:
         superhero_key = file.read()
@@ -65,7 +71,7 @@ def check_rate(url):
                 raise
 
 def get_anime_character(id):
-    if id == 0: 
+    if id == 0:
         id = random.randint(1,612)
     count = id % 25
     page = id // 25
