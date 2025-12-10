@@ -136,7 +136,7 @@ def error():
 def logout():
     session.pop('username', None) # remove username from session
     session.pop('team1', None) # remove loadout
-    session.pop('team1', None) # remove loadout
+    session.pop('team2', None) # remove loadout
     return redirect(url_for('login'))
 
 
