@@ -1,8 +1,9 @@
 SuperheroAPI
 - Requires you to login with your GitHub account to get an access token or key.
  
-PantheonAPI
+JikanAPI
 - Doesn't require a key.
+- Be careful of the quotas, especially 3 requests per second.
 
 PokeAPI
 - Doesn't require a key.
