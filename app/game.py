@@ -9,10 +9,6 @@ from battle import make_random_fighter
 
 url = "https://pokeapi.co/api/v2/pokemon/"
 
-class player:
-    def __init__(self):
-        self.list = random_team()
-
 def random_team():
     x = 0
     list = []

@@ -120,6 +120,13 @@ def menu():
                            card_list1 = session["team1"],
                            card_list2 = session["team2"])
 
+"""
+@app.route("/reroll", methods=['GET', 'POST']) #p is player int, c is character int
+def reroll(p, c):
+    newteam = session["team" + str(p)]
+    newteam[c] = make_random_fighter()
+"""
+
 @app.route("/game", methods=['GET', 'POST'])
 def game():
     return render_template('game.html')
