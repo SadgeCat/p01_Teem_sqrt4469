@@ -69,3 +69,6 @@ yuhangP -- 2025-12-09 22:07
 - called the functions to fetch data from superhero and jikan api to form 2 loadouts with 6 characters each
 - displayed the 2 teams in menu page (superhero images aren't showing up though)
 - fixed key in readme and keys folder with new jikanapi
+
+thomasM -- 2025-12-09 22:43
+- Expanded on the game.html page and linked what I added to battle.py to game.html which will now dispaly the stats of the characters as well as whose turn it is
