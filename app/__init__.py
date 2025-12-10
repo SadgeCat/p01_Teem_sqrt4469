@@ -13,6 +13,7 @@ from flask import redirect, url_for
 import sqlite3
 
 from apis import get_random_profile_pic
+from game import random_team
 
 DB_FILE="discobandit.db"
 
@@ -105,7 +106,19 @@ def home():
 
 @app.route("/menu", methods=['GET', 'POST'])
 def menu():
-    return render_template('menu.html')
+    if "team1" not in session:
+        team1 = random_team()
+        if team1 == None:
+            return redirect(url_for('error'))
+        session["team1"] = team1
+    if "team2" not in session:
+        team2 = random_team()
+        if team2 == None:
+            return redirect(url_for('error'))
+        session["team2"] = team2
+    return render_template('menu.html',
+                           card_list1 = session["team1"],
+                           card_list2 = session["team2"])
 
 @app.route("/game", methods=['GET', 'POST'])
 def game():
@@ -115,9 +128,15 @@ def game():
 def gameover():
     return render_template('gameover.html')
 
+@app.route("/error")
+def error():
+    return render_template('error.html')
+
 @app.route("/logout")
 def logout():
     session.pop('username', None) # remove username from session
+    session.pop('team1', None) # remove loadout
+    session.pop('team1', None) # remove loadout
     return redirect(url_for('login'))
 
 

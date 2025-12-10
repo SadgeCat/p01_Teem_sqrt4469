@@ -29,12 +29,6 @@ def check_stat(val):
         return random.randint(1, 100)
     return int(val)
 
-def check_key(url, key):
-    with urllib.request.urlopen(f"{url}/{key}/") as response:
-        data = response.read()
-    result = json.loads(data.decode('utf-8'))
-    return result["response"] == "error"
-
 def get_superhero(id):
     if id == 0:
         id = random.randint(1,613)
@@ -43,6 +37,11 @@ def get_superhero(id):
     with urllib.request.urlopen(f"https://www.superheroapi.com/api.php/{superhero_key}/{id}") as response:
         data = response.read()
     result = json.loads(data.decode('utf-8'))
+
+    # handles missing/wrong key
+    if result["response"] == "error":
+        return None
+
     stats = result["powerstats"]
     hp = check_stat(stats["durability"])
     atk = check_stat(stats["power"])
@@ -73,8 +72,8 @@ def check_rate(url):
 def get_anime_character(id):
     if id == 0:
         id = random.randint(1,612)
-    count = id % 25
-    page = id // 25
+    count = id % 25 + 1
+    page = id // 25 + 1
 
     data = check_rate(f"https://api.jikan.moe/v4/characters?order_by=favorites&sort=desc&limit={count}&page={page}")
     result = json.loads(data.decode('utf-8'))["data"]

@@ -63,3 +63,8 @@ Work done in class:
 - added gameover image to the gameover html page
 - function to check if api key call is successful to make sure that the app would run w/o the key or the wrong key in api.py
 - reroll function in game.py to reroll a character in your random loadout
+
+yuhangP -- 2025-12-09 22:07
+- redirect user to a new error page if they api key fails so the app doesn't crash
+- called the functions to fetch data from superhero and jikan api to form 2 loadouts with 6 characters each
+- displayed the 2 teams in menu page (superhero images aren't showing up though)

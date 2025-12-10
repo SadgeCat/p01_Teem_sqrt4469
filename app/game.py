@@ -18,6 +18,8 @@ def random_team():
     list = []
     while x <= 5:
         hero = make_random_fighter()
+        if hero == None:
+            return None
         list.append(hero)
         x+=1
     return list
@@ -28,6 +30,6 @@ def re_roll(list, x):
     print(list)
     return list
 
-playerone = player()
+#playerone = player()
 
-print(playerone.list)
+#print(playerone.list)

@@ -12,9 +12,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Document</title>
+    <title>Choose Your Loadout</title>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Hero Wars</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <h2>Character Loadouts</h2>
 
     <div class="container">
@@ -24,9 +37,9 @@
                 {% if card_list1 %}
                     {% for card in card_list1 %}
                     <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
+                        <img src="{{ card['image'] }}" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
+                            <h5 class="card-title">{{ card["name"] }}</h5>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
                             <a href="#" class="btn btn-primary">Go somewhere</a>
                         </div>
@@ -34,14 +47,6 @@
                     {% endfor %}
                 {% endif %}
             </div>
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
 
 
             <div class="col-sm-4">
@@ -49,9 +54,9 @@
                 {% if card_list2 %}
                     {% for card in card_list2 %}
                     <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
+                        <img src="{{ card['image'] }}" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
+                            <h5 class="card-title">{{ card["name"] }}</h5>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
                             <a href="#" class="btn btn-primary">Go somewhere</a>
                         </div>

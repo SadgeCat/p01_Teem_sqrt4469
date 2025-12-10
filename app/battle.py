@@ -31,6 +31,9 @@ def make_random_fighter():
     else:
         base = get_anime_character(0)
 
+    if base == None:
+        return None
+
     fighter = {
         "name": base["name"],
         "image": base["image"],
