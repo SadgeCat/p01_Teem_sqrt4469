@@ -41,7 +41,11 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ card["name"] }}</h5>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                            <a href="temp" class="btn btn-primary">Re-Roll Character</a>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="" id=a>
+                              <label class="form-check-label" for=a>
+                              </label>
+                            </div>
                         </div>
                     </div>
                     {% endfor %}
@@ -58,12 +62,21 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ card["name"] }}</h5>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                            <a href="temp" class="btn btn-primary">Re-Roll Character</a>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="" id="a">
+                              <label class="form-check-label" for="a">
+                              </label>
+                            </div>
                         </div>
                     </div>
                     {% endfor %}
                 {% endif %}
             </div>
+
+            <div>
+              <a href="{{ url_for('re_roll') }}" class="btn btn-primary">Reroll Character</a>
+            </div>
+
         </div>
     </div>
 

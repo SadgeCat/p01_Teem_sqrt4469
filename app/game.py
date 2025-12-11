@@ -20,11 +20,14 @@ def random_team():
         x+=1
     return list
 
+"""
+being written in the init because stored in session 
 def re_roll(list, x):
     hero = make_random_fighter()
     list[x] = hero
     print(list)
     return list
+"""
 
 #playerone = player()
 
