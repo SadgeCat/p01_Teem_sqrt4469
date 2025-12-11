@@ -4,7 +4,7 @@
 # P01: ArRESTed Development
 # Dec 2025
 
-import json, urllib.request, time
+import json, urllib.request, time, os
 import random
 
 def get_random_profile_pic():
@@ -32,7 +32,13 @@ def check_stat(val):
 def get_superhero(id):
     if id == 0:
         id = random.randint(1,613)
-    with open("keys/key_SuperheroAPI.txt") as file:
+        
+    path = "keys/key_SuperheroAPI.txt"
+    # path DNE
+    if not os.path.exists(path):
+        return None
+    
+    with open(path) as file:
         superhero_key = file.read()
     with urllib.request.urlopen(f"https://www.superheroapi.com/api.php/{superhero_key}/{id}") as response:
         data = response.read()
@@ -56,6 +62,35 @@ def get_superhero(id):
         "speed": speed,
         "def": defense
     }
+
+def get_superhero2(id):
+    while True:
+        try:
+            if id == 0:
+                id = random.randint(1,613)
+                
+            with urllib.request.urlopen(f"https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/id/{id}.json") as response:
+                data = response.read()
+            result = json.loads(data.decode('utf-8'))
+
+            stats = result["powerstats"]
+            hp = check_stat(stats["durability"])
+            atk = check_stat(stats["power"])
+            speed = check_stat(stats["speed"])
+            defense = check_stat(stats["strength"])
+
+            return {
+                "name": result["name"],
+                "image": result["images"]["md"],
+                "hp": hp,
+                "atk": atk,
+                "speed": speed,
+                "def": defense
+            }
+        except urllib.error.HTTPError:
+            id = 0
+            continue
+
 
 def check_rate(url):
     while True:

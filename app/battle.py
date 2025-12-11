@@ -1,5 +1,5 @@
 import random, math
-from apis import get_superhero, get_anime_character
+from apis import get_superhero, get_anime_character, get_superhero2
 
 # All charatcers will share the same 3 moves for now
 MOVES = {
@@ -27,7 +27,7 @@ def make_random_fighter():
     source = random.choice(["superhero", "anime"])
 
     if source == "superhero":
-        base = get_superhero(0)
+        base = get_superhero2(0)
     else:
         base = get_anime_character(0)
 

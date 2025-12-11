@@ -72,3 +72,13 @@ yuhangP -- 2025-12-09 22:07
 
 thomasM -- 2025-12-09 22:43
 - Expanded on the game.html page and linked what I added to battle.py to game.html which will now dispaly the stats of the characters as well as whose turn it is
+
+yuhangP -- 2025-12-10 11:45
+Work done in class:
+- found a new SuperheroAPI with potentially working image urls since our old one didn't work
+- added bootstrap styling to the login page
+- work in progress on rerolling
+
+yuhangP -- 2025-12-10 20:58
+- fixed api key handling if they api key txt files are missing
+- used new superheroAPI to fetch working images and they are displayed in menu page
