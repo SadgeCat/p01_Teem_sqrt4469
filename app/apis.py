@@ -24,6 +24,16 @@ def get_pokemon(id):
     result = json.loads(data.decode('utf-8'))
     return result
 
+def get_random_moves():
+    move = {}
+    for i in range(4):
+        move_number = random.randint(1,750)
+        with urllib.request.urlopen(f"https://pokeapi.co/api/v2/move/{move_number}/") as response:
+            data = response.read()
+        result = json.loads(data.decode('utf-8'))
+        move[result["name"]] = result["pp"] // 5
+    return move
+
 def check_stat(val):
     if val is None or (isinstance(val, str) and not val.isdigit()):
         return random.randint(1, 100)
@@ -32,12 +42,12 @@ def check_stat(val):
 def get_superhero(id):
     if id == 0:
         id = random.randint(1,613)
-        
+
     path = "keys/key_SuperheroAPI.txt"
     # path DNE
     if not os.path.exists(path):
         return None
-    
+
     with open(path) as file:
         superhero_key = file.read()
     with urllib.request.urlopen(f"https://www.superheroapi.com/api.php/{superhero_key}/{id}") as response:
@@ -68,10 +78,12 @@ def get_superhero2(id):
         try:
             if id == 0:
                 id = random.randint(1,613)
-                
+
             with urllib.request.urlopen(f"https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/id/{id}.json") as response:
                 data = response.read()
             result = json.loads(data.decode('utf-8'))
+
+            pokemon = get_pokemon(id)
 
             stats = result["powerstats"]
             hp = check_stat(stats["durability"])
@@ -79,13 +91,16 @@ def get_superhero2(id):
             speed = check_stat(stats["speed"])
             defense = check_stat(stats["strength"])
 
+            moves = get_random_moves()
+
             return {
                 "name": result["name"],
                 "image": result["images"]["md"],
                 "hp": hp,
                 "atk": atk,
                 "speed": speed,
-                "def": defense
+                "def": defense,
+                "moves": moves
             }
         except urllib.error.HTTPError:
             id = 0
@@ -119,6 +134,8 @@ def get_anime_character(id):
     data2 = check_rate(f"https://api.jikan.moe/v4/characters/{mal_id}/full")
     character = json.loads(data2.decode('utf-8'))["data"]
 
+    moves = get_random_moves()
+
     return {
         "name": character["name"],
         "image": character["images"]["jpg"]["image_url"],
@@ -126,4 +143,5 @@ def get_anime_character(id):
         "atk": 10 * len(character["anime"]), # atk = #anime * 10
         "speed": 10 * len(character["manga"]), # speed = #manga * 10
         "def": 10 * len(character["voices"]), # defense = #voice * 10
+        "moves": moves
     }
