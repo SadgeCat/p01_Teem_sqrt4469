@@ -82,3 +82,8 @@ Work done in class:
 yuhangP -- 2025-12-10 20:58
 - fixed api key handling if they api key txt files are missing
 - used new superheroAPI to fetch working images and they are displayed in menu page
+
+yuhangP -- 2025-12-11 19:31
+Work done in class:
+- added boostrap styling to the register page
+- fetched pokemon move name and pp data from the pokemon api and added it to the superhero and anime character info
