@@ -5,7 +5,7 @@
 # Dec 2025
 
 import json, urllib.request, time, os
-import random
+import random, math
 
 def get_random_profile_pic():
     randomint = random.randint(1, 1025)
@@ -25,21 +25,24 @@ def get_pokemon(id):
     return result
 
 def get_random_moves():
-    move = {}
+    moves = []
     for i in range(4):
         move_number = random.randint(1,750)
         with urllib.request.urlopen(f"https://pokeapi.co/api/v2/move/{move_number}/") as response:
             data = response.read()
         result = json.loads(data.decode('utf-8'))
-        move[result["name"]] = result["pp"] // 5
-    return move
+        move = {}
+        move["name"] = result["name"]
+        move["pp"] = math.ceil(result["pp"] / 5)
+        moves.append(move)
+    return moves
 
 def check_stat(val):
     if val is None or (isinstance(val, str) and not val.isdigit()):
         return random.randint(1, 100)
     return int(val)
 
-def get_superhero(id):
+def get_superhero2(id):
     if id == 0:
         id = random.randint(1,613)
 
@@ -73,7 +76,7 @@ def get_superhero(id):
         "def": defense
     }
 
-def get_superhero2(id):
+def get_superhero(id):
     while True:
         try:
             if id == 0:
@@ -97,6 +100,7 @@ def get_superhero2(id):
                 "name": result["name"],
                 "image": result["images"]["md"],
                 "hp": hp,
+                "current_hp": hp,
                 "atk": atk,
                 "speed": speed,
                 "def": defense,
@@ -140,6 +144,7 @@ def get_anime_character(id):
         "name": character["name"],
         "image": character["images"]["jpg"]["image_url"],
         "hp": round(0.5 * character["favorites"] ** 0.5), # hp = 0.5 * #favorites ** 0.5
+        "current_hp": round(0.5 * character["favorites"] ** 0.5),
         "atk": 10 * len(character["anime"]), # atk = #anime * 10
         "speed": 10 * len(character["manga"]), # speed = #manga * 10
         "def": 10 * len(character["voices"]), # defense = #voice * 10

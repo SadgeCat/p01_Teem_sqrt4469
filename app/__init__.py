@@ -10,7 +10,7 @@ from flask import request
 from flask import session
 from flask import redirect, url_for
 
-import sqlite3
+import sqlite3, random
 
 from apis import get_random_profile_pic
 from game import random_team
@@ -106,17 +106,22 @@ def home():
 
 @app.route("/menu", methods=['GET', 'POST'])
 def menu():
+    which = ["anime", "superhero"]
+    random.shuffle(which)
     if "team1" not in session:
-        team1 = random_team()
+        team1 = random_team(which[0])
         if team1 == None:
             return redirect(url_for('error'))
         session["team1"] = team1
+        session["team1_which"] = which[0]
     if "team2" not in session:
-        team2 = random_team()
+        team2 = random_team(which[1])
         if team2 == None:
             return redirect(url_for('error'))
         session["team2"] = team2
+        session["team2_which"] = which[0]
     return render_template('menu.html',
+                           player = session["username"],
                            card_list1 = session["team1"],
                            card_list2 = session["team2"])
 
@@ -151,6 +156,8 @@ def logout():
     session.pop('username', None) # remove username from session
     session.pop('team1', None) # remove loadout
     session.pop('team2', None) # remove loadout
+    session.pop('team1_which', None)
+    session.pop('team2_which', None)
     return redirect(url_for('login'))
 
 

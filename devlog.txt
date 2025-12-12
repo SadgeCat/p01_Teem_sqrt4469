@@ -87,3 +87,7 @@ yuhangP -- 2025-12-11 19:31
 Work done in class:
 - added boostrap styling to the register page
 - fetched pokemon move name and pp data from the pokemon api and added it to the superhero and anime character info
+
+yuhangP -- 2025-12-11 21:13
+- menu page now displays the character's numerical stats and the moves they have
+- removed redundant functions

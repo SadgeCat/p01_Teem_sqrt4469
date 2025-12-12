@@ -4,16 +4,19 @@
 # P01: ArRESTed Development
 # Dec 2025
 import random
-from apis import get_pokemon, get_superhero
-from battle import make_random_fighter
+from apis import get_pokemon, get_superhero, get_anime_character
 
 url = "https://pokeapi.co/api/v2/pokemon/"
 
-def random_team():
+def random_team(what):
     x = 0
     list = []
     while x <= 5:
-        hero = make_random_fighter()
+        if what == "anime":
+            hero = get_anime_character(0)
+        else:
+            hero = get_superhero(0)
+        # hero = make_random_fighter()
         if hero == None:
             return None
         list.append(hero)
