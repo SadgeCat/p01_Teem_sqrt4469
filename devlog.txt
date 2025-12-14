@@ -91,3 +91,14 @@ Work done in class:
 yuhangP -- 2025-12-11 21:13
 - menu page now displays the character's numerical stats and the moves they have
 - removed redundant functions
+
+yuhangP -- 2025-12-12 11:45
+Work done in class:
+- started on game.html creating the name and team of first player
+- continued to work on rerolling characters
+
+yuhangP -- 2025-12-13 22:23
+- completed the basic structure of game.html (a title followed by 2 cards side by side displaying 2 characters, one for player1, one for player2)
+- added buttons to game.html for the 4 moves as well as a switch button (neither functional yet)
+- updated styling of menu page so that each player's character cards are in a row instead of column
+- made route to game page storing the game's state inside the session, need to add attack and switch function

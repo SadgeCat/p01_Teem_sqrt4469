@@ -28,57 +28,62 @@
             </ul>
         </div>
     </nav>
+    <br>
     <h2>Character Loadouts</h2>
-
+    <br>
     <div class="container">
         <div class="row">
-            <div class="col-sm-4">
-                <h3>Player 1: {{ player }} (logged in)</h3>
-                {% if card_list1 %}
-                    {% for card in card_list1 %}
-                    <div class="card" style="width: 18rem;">
+            <h3>Player 1: {{ player }} (logged in)</h3>
+            {% if card_list1 %}
+                {% for card in card_list1 %}
+                <div class="col-sm-2">
+                    <div class="card" style="width: 12rem;">
                         <img src="{{ card['image'] }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{ card["name"] }}</h5>
                             <p class="card-text">HP: {{ card["hp"] }} | ATK: {{ card["atk"] }} | SPD: {{ card["speed"] }} | DEF: {{ card["def"] }}</p>
                             <p class="card-text">{{ card["moves"][0]["name"] }}: pp = {{ card["moves"][0]["pp"] }} <br> {{ card["moves"][1]["name"] }}: pp = {{ card["moves"][1]["pp"] }} <br> {{ card["moves"][2]["name"] }}: pp = {{ card["moves"][2]["pp"] }} <br> {{ card["moves"][3]["name"] }}: pp = {{ card["moves"][3]["pp"] }}</p>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" value="" id=a>
-                              <label class="form-check-label" for=a>
-                              </label>
+                            <input class="form-check-input" type="checkbox" value="" id=a>
+                            <label class="form-check-label" for=a>
+                            </label>
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-
-
-            <div class="col-sm-4">
-                <h3>Player 2</h3>
-                {% if card_list2 %}
-                    {% for card in card_list2 %}
-                    <div class="card" style="width: 18rem;">
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <br><br>
+        <div class="row">
+            <h3>Player 2</h3>
+            {% if card_list2 %}
+                {% for card in card_list2 %}
+                <div class="col-sm-2">
+                    <div class="card" style="width: 12rem;">
                         <img src="{{ card['image'] }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{ card["name"] }}</h5>
                             <p class="card-text">HP: {{ card["hp"] }} | ATK: {{ card["atk"] }} | SPD: {{ card["speed"] }} | DEF: {{ card["def"] }}</p>
                             <p class="card-text">{{ card["moves"][0]["name"] }}: pp = {{ card["moves"][0]["pp"] }} <br> {{ card["moves"][1]["name"] }}: pp = {{ card["moves"][1]["pp"] }} <br> {{ card["moves"][2]["name"] }}: pp = {{ card["moves"][2]["pp"] }} <br> {{ card["moves"][3]["name"] }}: pp = {{ card["moves"][3]["pp"] }}</p>
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox" value="" id="a">
-                              <label class="form-check-label" for="a">
-                              </label>
+                            <input class="form-check-input" type="checkbox" value="" id="a">
+                            <label class="form-check-label" for="a">
+                            </label>
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-
-            <div>
-              <a href="{{ url_for('reroll') }}" class="btn btn-primary">Reroll Character</a>
-            </div>
-
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <br><br>
+        </div>
+        <div>
+            <a href="{{ url_for('reroll') }}" class="btn btn-primary">Reroll Character</a>
+        </div>
+        <div>
+            <a href="{{ url_for('game') }}" class="btn btn-primary"> Start Game</a>
         </div>
     </div>
 

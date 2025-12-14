@@ -10,63 +10,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Hero Wars</title>
-    <h2>Player 1</h2>
-<img src="{{ state.p1.image }}" alt="Player 1 image" height="150">
-<p>Name: {{ state.p1.name }}</p>
-<p>HP: {{ state.p1.current_hp }} / {{ state.p1.hp }}</p>
-<p>ATK: {{ state.p1.atk }}</p>
-<p>DEF: {{ state.p1.def }}</p>
-<p>SPD: {{ state.p1.speed }}</p>
-
-<hr>
-
-
-<h2>Player 2</h2>
-<img src="{{ state.p2.image }}" alt="Player 2 image" height="150">
-<p>Name: {{ state.p2.name }}</p>
-<p>HP: {{ state.p2.current_hp }} / {{ state.p2.hp }}</p>
-<p>ATK: {{ state.p2.atk }}</p>
-<p>DEF: {{ state.p2.def }}</p>
-<p>SPD: {{ state.p2.speed }}</p>
-
-<hr>
-{% if stateTurn == "p1"%}
-<h2>
-  {% if state.winner == "p1" %}
-    {{ state.p1.name }} wins the battle!
-  {% else %}
-    {{ state.p2.name }} wins the battle!
-{% endif %}
-</h2>
-
-<p><a href="{{ url_for('reset_game') }}">Play Again</a></p>
- <p><a href="{{ url_for('home') }}">Back Home</a></p>
-
-{% else %}
-
- <p>It is {{ state.turn }}'s turn.</p>
-
-    {% if state.turn == "p1" %}
-     <form action="{{ url_for('move') }}" method="POST">
-         {% for key, move in moves.items() %}
-             <button type="submit" name="move" value="{{ key }}">
-                 {{ move.name }}
-             </button>
-         {% endfor %}
-     </form>
-
-
 </head>
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-4">
-        <h3>{{ player }}</h3>
-        <img src="{{ profile_pic }}" alt="">
+  <div class="container mt-4">
+      <div class="text-center mb-4">
+          <h1>Showdown Arena</h1>
+          <p class="text-muted">Superheroes vs Anime</p>
+      </div>
+
+      <div class="row justify-content-center">
+
+          <div class="col-md-3 text-center">
+              <h3>{{ player }} (you)</h3>
+
+              <div class="card p-3 mb-3">
+                  <img src="{{ p1_active['image'] }}" class="img-fluid" alt="">
+                  <h4 class="mt-2">{{ p1_active['name'] }}</h4>
+
+                  <div class="progress">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{ p1_hp_percent }}%;">
+                      {{ p1_active['current_hp'] }} / {{ p1_active['hp'] }}
+                    </div>
+                  </div>
+
+                  <p class="mt-2">
+                      ATK: {{ p1_active['atk'] }} |
+                      DEF: {{ p1_active['def'] }} |
+                      SPD: {{ p1_active['speed'] }}
+                  </p>
+              </div>
+
+              <form method="POST">
+                {% for move in p1_active['moves'] %}
+                    <button class="btn btn-primary btn-sm w-100 mb-2" type="submit" name="action" value="{{ move['name'] }}">
+                        {{ move['name'] }}
+                    </button>
+                {% endfor %}
+             
+                  <button class="btn btn-secondary btn-sm w-100" name="action" value="p1_switch">
+                      Switch
+                  </button>
+              </form>
+          </div>
+
+          <div class="col-md-4 d-flex align-items-center justify-content-center">
+              <h1>VS</h1>
+          </div>
+
+          <div class="col-md-3 text-center">
+              <h3>Player 2</h3>
+
+              <div class="card p-3 mb-3">
+                  <img src="{{ p2_active['image']}}" class="img-fluid" alt="">
+                  <h4 class="mt-2">{{ p2_active['name'] }}</h4>
+
+                  <div class="progress">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{ p2_hp_percent }}%;">
+                      {{ p2_active['current_hp'] }} / {{ p2_active['hp'] }}
+                    </div>
+                  </div>
+
+                  <p class="mt-2">
+                      ATK: {{ p2_active['atk'] }} |
+                      DEF: {{ p2_active['def'] }} |
+                      SPD: {{ p2_active['speed'] }}
+                  </p>
+              </div>
+
+              <form method="POST">
+                {% for move in p2_active['moves'] %}
+                    <button class="btn btn-primary btn-sm w-100 mb-2" type="submit" name="action" value="{{ move['name'] }}">
+                        {{ move['name'] }}
+                    </button>
+                {% endfor %}
+
+                  <button class="btn btn-secondary btn-sm w-100" name="action" value="p2_switch">
+                      Switch
+                  </button>
+              </form>
+          </div>
 
       </div>
-    </div>
+
   </div>
+  <a href="{{ url_for('home') }}">Back Home</a>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

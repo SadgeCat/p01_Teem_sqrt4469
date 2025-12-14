@@ -14,6 +14,7 @@ import sqlite3, random
 
 from apis import get_random_profile_pic
 from game import random_team
+from battle import attack
 
 DB_FILE="discobandit.db"
 
@@ -141,7 +142,53 @@ def reroll(one, two):
 
 @app.route("/game", methods=['GET', 'POST'])
 def game():
-    return render_template('game.html')
+    if "game_state" not in session:
+        session["game_state"] = {
+            "p1_team": session["team1"],
+            "p2_team": session["team2"],
+            "p1_active": session["team1"][0],
+            "p2_active": session["team2"][0],
+            "turn": "p1",
+        }
+
+    game = session["game_state"]
+    p1_active = game["p1_active"]
+    p2_active = game["p2_active"]
+    
+    if request.method == "POST":
+        action = request.form.get("action")
+
+        if game["turn"] == "p1":
+            if action == "p1_switch":
+                p1_active = p1_active #change
+                game["turn"] = "p2"
+            else:
+                attack(p1_active, p2_active, action) #need attack function
+                game["turn"] = "p2"
+
+        elif game["turn"] == "p2":
+            if action == "p2_switch":
+                p2_active = p2_active #change
+                game["turn"] = "p1"
+            else:
+                attack(p2_active, p1_active, action) # need atk func
+                game["turn"] = "p1"
+
+        session["game_state"] = game
+        return redirect(url_for("game"))
+    
+    p1_hp_percent = int((p1_active["current_hp"] / p1_active["hp"]) * 100)
+    p2_hp_percent = int((p2_active["current_hp"] / p2_active["hp"]) * 100)
+
+    return render_template('game.html',
+                           player = session['username'],
+                           p1_team = game["p1_team"],
+                           p2_team = game["p2_team"],
+                           p1_active = p1_active,
+                           p2_active = p2_active,
+                           p1_hp_percent = p1_hp_percent,
+                           p2_hp_percent = p2_hp_percent,
+                           turn = game["turn"])
 
 @app.route("/gameover", methods=['GET', 'POST'])
 def gameover():
