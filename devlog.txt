@@ -115,3 +115,7 @@ michelleC -- 2025-12-15
 
 yuhangP -- 2025-12-14 22:00
 - tweaked game balancing stats since anime characters lowkey overpowered
+
+
+thomasM -- 2025-12-15 11:44
+- Got rid of redundant functions and also added the attack function for characters to attack each other in game
