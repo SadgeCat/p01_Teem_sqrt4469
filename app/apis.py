@@ -147,8 +147,8 @@ def get_anime_character(id):
         "image": character["images"]["jpg"]["image_url"],
         "hp": round(0.5 * character["favorites"] ** 0.5), # hp = 0.5 * #favorites ** 0.5
         "current_hp": round(0.5 * character["favorites"] ** 0.5),
-        "atk": 10 * len(character["anime"]), # atk = #anime * 10
-        "speed": 10 * len(character["manga"]), # speed = #manga * 10
-        "def": 10 * len(character["voices"]), # defense = #voice * 10
+        "atk": random.randint(5,10) * len(character["anime"]), # atk = #anime * random.randint(5,10)
+        "speed": random.randint(5,10) * len(character["manga"]), # speed = #manga * random.randint(5,10)
+        "def": random.randint(5,10) * len(character["voices"]), # defense = #voice * random.randint(5,10)
         "moves": moves
     }

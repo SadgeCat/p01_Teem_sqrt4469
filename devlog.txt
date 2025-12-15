@@ -108,3 +108,6 @@ yuhangP -- 2025-12-14 21:45
 - made the switch button functional in game page (a bootstrap collapse that displays switchable characters)
 - character switch button working by adding unique id to each character in case of 2 of the same characters
 - disables out other player's button if it's not their turn, made first turn random
+
+yuhangP -- 2025-12-14 22:00
+- tweaked game balancing stats since anime characters lowkey overpowered
