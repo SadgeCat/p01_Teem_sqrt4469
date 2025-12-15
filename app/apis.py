@@ -152,3 +152,18 @@ def get_anime_character(id):
         "def": random.randint(5,10) * len(character["voices"]), # defense = #voice * random.randint(5,10)
         "moves": moves
     }
+
+def get_insult():
+    try:
+        with urllib.request.urlopen("https://evilinsult.com/generate_insult.php?lang=en&type=json") as response:
+            data = response.read()
+        result = json.loads(data.decode('utf-8'))
+        insult = result["insult"]
+        with urllib.request.urlopen(f"https://www.purgomalum.com/service/json?text={insult}") as response:
+            data = response.read()
+        result = json.loads(data.decode('utf-8'))
+        filtered = result["result"]
+        return filtered
+    except:
+        print("Something went wrong")
+        return "oops no insult for you"
