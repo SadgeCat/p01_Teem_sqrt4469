@@ -4,7 +4,7 @@
 # P01: ArRESTed Development
 # Dec 2025
 
-import json, urllib.request, time, os
+import json, urllib.request, time, os, uuid
 import random, math
 
 def get_random_profile_pic():
@@ -97,6 +97,7 @@ def get_superhero(id):
             moves = get_random_moves()
 
             return {
+                "id": str(uuid.uuid4()),
                 "name": result["name"],
                 "image": result["images"]["md"],
                 "hp": hp,
@@ -141,6 +142,7 @@ def get_anime_character(id):
     moves = get_random_moves()
 
     return {
+        "id": str(uuid.uuid4()),
         "name": character["name"],
         "image": character["images"]["jpg"]["image_url"],
         "hp": round(0.5 * character["favorites"] ** 0.5), # hp = 0.5 * #favorites ** 0.5

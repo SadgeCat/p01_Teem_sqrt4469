@@ -91,6 +91,7 @@ def login():
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
+    session.pop('game_state', None)
     if "username" not in session:
         return redirect(url_for('login'))
     db = sqlite3.connect(DB_FILE)
@@ -148,7 +149,7 @@ def game():
             "p2_team": session["team2"],
             "p1_active": session["team1"][0],
             "p2_active": session["team2"][0],
-            "turn": "p1",
+            "turn": random.choice(["p1", "p2"]),
         }
 
     game = session["game_state"]
@@ -159,16 +160,22 @@ def game():
         action = request.form.get("action")
 
         if game["turn"] == "p1":
-            if action == "p1_switch":
-                p1_active = p1_active #change
+            if action.startswith("switch_"):
+                char_id = action.replace("switch_", "")
+                for char in game['p1_team']:
+                    if char['id'] == char_id and char['current_hp'] > 0:
+                        game['p1_active'] = char
                 game["turn"] = "p2"
             else:
                 attack(p1_active, p2_active, action) #need attack function
                 game["turn"] = "p2"
 
         elif game["turn"] == "p2":
-            if action == "p2_switch":
-                p2_active = p2_active #change
+            if action.startswith("switch_"):
+                char_id = action.replace("switch_", "")
+                for char in game['p2_team']:
+                    if char['id'] == char_id and char['current_hp'] > 0:
+                        game['p2_active'] = char
                 game["turn"] = "p1"
             else:
                 attack(p2_active, p1_active, action) # need atk func
@@ -205,6 +212,7 @@ def logout():
     session.pop('team2', None) # remove loadout
     session.pop('team1_which', None)
     session.pop('team2_which', None)
+    session.pop('game_state', None)
     return redirect(url_for('login'))
 
 
