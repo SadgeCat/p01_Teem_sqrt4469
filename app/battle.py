@@ -71,41 +71,6 @@ def switch_Character():
     return
 
 def attack(attacker, defender, move_name):
+    move = attacker["moves"][move_name]
+    defender["current_hp"] = defender["current_hp"] - ((move["damage"] ** (math.log10(10-move["pp"])) / 2.5) * 20)
     return
-
-def apply_move(state, move_key):
-
-    if state["winner"] is not None:
-        return state
-
-    attacker_key = state["turn"]
-    defender_key = "p1" if attacker_key == "p2" else "p2"
-
-    attacker = state[attacker_key]
-    defender = state[defender_key]
-
-    move = MOVES[move_key]
-    power = move["power"]
-
-    # Damage formula:
-    damage = attacker["atk"] - (math.log10(defender["def"])/10 + 0.003*defender["def"])
-
-    if damage < 1:
-        damage = 1
-
-    defender["current_hp"] -= damage
-    if defender["current_hp"] < 0:
-        defender["current_hp"] = 0
-
-    message = f"{attacker['name']} used {move['name']} and dealt {damage} damage."
-    state["log"].append(message)
-
-    # Check if defender is defeated
-    if defender["current_hp"] == 0:
-        state["winner"] = attacker_key
-        state["log"].append(f"{defender['name']} is defeated!")
-    else:
-        # Switch turns if no one has won yet
-        state["turn"] = defender_key
-
-    return state
