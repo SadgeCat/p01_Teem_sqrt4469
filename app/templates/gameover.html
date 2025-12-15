@@ -9,35 +9,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-      .responsive {
-        width: 100%;
-        height: auto;
-      }
-      .vertical-center{
-        margin:0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -ms-transform: translate(-50%, -10%);
-        transform: translate(-50%, 750%);
-        background-color: rgba(0,0,0,1);
-        background-blend-mode: lighten;
-
-      }
-      </style>
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: black;
+    }
+    .image-container {
+      position: relative;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+    }
+    .centered-button {
+      position: absolute;
+      bottom: 10%;
+    }
+  </style>
+  <title>Game Over</title>
 </head>
-<body bgcolor="black">
-  <img src="../static/images/GameOver.jpg" alt="Game Over" class="responsive" width="600" height="400">
+<body>
 
-    <div class="vertical-center">
-    <a href="{{ url_for('home') }}"><button type="button" class="btn btn-primary ">Back To Homepage</button></a>
+  <div class="image-container">
+    <img src="../static/images/GameOver.jpg" alt="Game Over">
+    <a href="{{ url_for('home') }}" class="btn btn-primary btn-lg centered-button">Back To Homepage</a>
   </div>
-</body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
