@@ -26,101 +26,146 @@
             {% endif %}
           </h2>
       </div>
-
+      <br>
       <div class="row justify-content-center">
 
-          <div class="col-md-3 text-center">
-              <h3>{{ player }} (you)</h3>
+          <div class="col-md-5 text-center">
+              <h3>{{ player }} (you)</h3><br>
+              
+              <div class="row align-items-start">
+                <div class="col-7">
+                    <div class="card p-3 mb-3">
+                        <img src="{{ p1_active['image'] }}" class="img-fluid" alt="">
+                        <h4 class="mt-2">{{ p1_active['name'] }}</h4>
 
-              <div class="card p-3 mb-3">
-                  <img src="{{ p1_active['image'] }}" class="img-fluid" alt="">
-                  <h4 class="mt-2">{{ p1_active['name'] }}</h4>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{ p1_hp_percent }}%;">
+                            {{ p1_active['current_hp'] }} / {{ p1_active['hp'] }}
+                            </div>
+                        </div>
 
-                  <div class="progress">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{ p1_hp_percent }}%;">
-                      {{ p1_active['current_hp'] }} / {{ p1_active['hp'] }}
+                        <p class="mt-2">
+                            ATK: {{ p1_active['atk'] }} | DEF: {{ p1_active['def'] }} | SPD: {{ p1_active['speed'] }}
+                        </p>
                     </div>
-                  </div>
 
-                  <p class="mt-2">
-                      ATK: {{ p1_active['atk'] }} | DEF: {{ p1_active['def'] }} | SPD: {{ p1_active['speed'] }}
-                  </p>
+                    {% if p1_insult %}
+                    <div class="alert alert-warning mt-2 py-2">
+                        <strong>{{ p1_active['name'] }}:</strong>
+                        "{{ p1_insult }}"
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-5">
+                    <h4>Moves</h4>
+                    <form method="POST">
+                        {% for move in p1_active['moves'] %}
+                            <button class="btn btn-primary btn-sm w-100 mb-2" type="submit" name="action" value="{{ move['name'] }}" {% if turn != "p1" or move['pp'] <= 0 %}disabled{% endif %}>
+                                {{ move['name'] }} ({{ move['pp'] }})
+                            </button>
+                        {% endfor %}
+
+                        <button class="btn btn-warning btn-sm w-100 mb-2" type="submit" name="action" value="p1_taunt">
+                            Trash Talk
+                        </button>
+                    
+                        <button class="btn btn-secondary btn-sm w-100 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#p1SwitchCollapse" aria-expanded="false" aria-controls="p1SwitchCollapse">
+                            Switch
+                        </button>
+
+                        <div class="collapse mt-2" id="p1SwitchCollapse">
+                            <div class="card card-body">
+                                {% for char in p1_team %}
+                                    {% if char['id'] != p1_active['id'] %}
+                                        <button class="btn btn-warning btn-sm w-100 mb-2" type="submit" name="action" value="switch_{{ char['id'] }}" {% if turn != "p1" or char['current_hp'] <= 0 %}disabled{% endif %}>
+                                            <img src="{{ char['image'] }}" width="30" class="me-2">
+                                            {{ char['name'] }}
+                                        </button>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+              <h4 class="text-center">Battle Log</h4>
+                <div class="card" style="height: 350px; overflow-y: auto;">
+                    <ul class="list-group list-group-flush">
+                    {% for entry in log %}
+                        <li class="list-group-item small">
+                        {{ entry }}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+          </div>
+
+          <div class="col-md-5 text-center">
+              <h3>Player 2</h3><br>
+
+            <div class="row align-items-start justify-content-end">
+              <div class="col-5">
+                <h4>Moves</h4>
+                <form method="POST">
+                    {% for move in p2_active['moves'] %}
+                        <button class="btn btn-primary btn-sm w-100 mb-2" type="submit" name="action" value="{{ move['name'] }}" {% if turn != "p2" or move['pp'] <= 0 %}disabled{% endif %}>
+                            {{ move['name'] }} ({{ move['pp'] }})
+                        </button>
+                    {% endfor %}
+
+                    <button class="btn btn-warning btn-sm w-100 mb-2" type="submit" name="action" value="p2_taunt">
+                        Trash Talk
+                    </button>
+
+                    <button class="btn btn-secondary btn-sm w-100 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#p2SwitchCollapse" aria-expanded="false" aria-controls="p2SwitchCollapse">
+                        Switch
+                    </button>
+
+                    <div class="collapse mt-2" id="p2SwitchCollapse">
+                        <div class="card card-body">
+                            {% for char in p2_team %}
+                                {% if char['id'] != p2_active['id'] %}
+                                    <button class="btn btn-warning btn-sm w-100 mb-2" type="submit" name="action" value="switch_{{ char['id'] }}" {% if turn != "p2" or char['current_hp'] <= 0 %}disabled{% endif %}>
+                                        <img src="{{ char['image'] }}" width="30" class="me-2">
+                                        {{ char['name'] }}
+                                    </button>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </form>
               </div>
 
-              <form method="POST">
-                {% for move in p1_active['moves'] %}
-                    <button class="btn btn-primary btn-sm w-100 mb-2" type="submit" name="action" value="{{ move['name'] }}" {% if turn != "p1" %}disabled{% endif %}>
-                        {{ move['name'] }}
-                    </button>
-                {% endfor %}
-             
-                <button class="btn btn-secondary btn-sm w-100 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#p1SwitchCollapse" aria-expanded="false" aria-controls="p1SwitchCollapse">
-                    Switch
-                </button>
+                <div class="col-7">
+                    <div class="card p-3 mb-3">
+                        <img src="{{ p2_active['image']}}" class="img-fluid" alt="">
+                        <h4 class="mt-2">{{ p2_active['name'] }}</h4>
 
-                <div class="collapse mt-2" id="p1SwitchCollapse">
-                    <div class="card card-body">
-                        {% for char in p1_team %}
-                            {% if char['current_hp'] > 0 and char['id'] != p1_active['id'] %}
-                                <button class="btn btn-warning btn-sm w-100 mb-2" type="submit" name="action" value="switch_{{ char['id'] }}" {% if turn != "p1" %}disabled{% endif %}>
-                                    <img src="{{ char['image'] }}" width="30" class="me-2">
-                                    {{ char['name'] }}
-                                </button>
-                            {% endif %}
-                        {% endfor %}
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{ p2_hp_percent }}%;">
+                            {{ p2_active['current_hp'] }} / {{ p2_active['hp'] }}
+                            </div>
+                        </div>
+
+                        <p class="mt-2">
+                            ATK: {{ p2_active['atk'] }} | DEF: {{ p2_active['def'] }} | SPD: {{ p2_active['speed'] }}
+                        </p>
                     </div>
+
+                    {% if p2_insult %}
+                    <div class="alert alert-warning mt-2 py-2">
+                        <strong>{{ p2_active['name'] }}:</strong>
+                        "{{ p2_insult }}"
+                    </div>
+                    {% endif %}
                 </div>
-              </form>
-          </div>
 
-          <div class="col-md-4 d-flex align-items-center justify-content-center">
-              <h1>VS</h1>
-          </div>
-
-          <div class="col-md-3 text-center">
-              <h3>Player 2</h3>
-
-              <div class="card p-3 mb-3">
-                  <img src="{{ p2_active['image']}}" class="img-fluid" alt="">
-                  <h4 class="mt-2">{{ p2_active['name'] }}</h4>
-
-                  <div class="progress">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{ p2_hp_percent }}%;">
-                      {{ p2_active['current_hp'] }} / {{ p2_active['hp'] }}
-                    </div>
-                  </div>
-
-                  <p class="mt-2">
-                      ATK: {{ p2_active['atk'] }} | DEF: {{ p2_active['def'] }} | SPD: {{ p2_active['speed'] }}
-                  </p>
-              </div>
-
-              <form method="POST">
-                {% for move in p2_active['moves'] %}
-                    <button class="btn btn-primary btn-sm w-100 mb-2" type="submit" name="action" value="{{ move['name'] }}" {% if turn != "p2" %}disabled{% endif %}>
-                        {{ move['name'] }}
-                    </button>
-                {% endfor %}
-
-                <button class="btn btn-secondary btn-sm w-100 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#p2SwitchCollapse" aria-expanded="false" aria-controls="p2SwitchCollapse">
-                    Switch
-                </button>
-
-                <div class="collapse mt-2" id="p2SwitchCollapse">
-                    <div class="card card-body">
-                        {% for char in p2_team %}
-                            {% if char['current_hp'] > 0 and char['id'] != p2_active['id'] %}
-                                <button class="btn btn-warning btn-sm w-100 mb-2" type="submit" name="action" value="switch_{{ char['id'] }}" {% if turn != "p2" %}disabled{% endif %}>
-                                    <img src="{{ char['image'] }}" width="30" class="me-2">
-                                    {{ char['name'] }}
-                                </button>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-              </form>
-          </div>
-
+            </div>
+        </div>
       </div>
 
   </div>

@@ -67,46 +67,11 @@ def create_game_state():
     }
     return state
 
-#add button to switch pokemon mid-game
-def switch_Character():
-    return
-        
-def attack():
-    return
 
-def apply_move(state, move_key):
-
-    if state["winner"] is not None:
-        return state
-
-    attacker_key = state["turn"]
-    defender_key = "p1" if attacker_key == "p2" else "p2"
-
-    attacker = state[attacker_key]
-    defender = state[defender_key]
-
-    move = MOVES[move_key]
-    power = move["power"]
-
-    # Damage formula:
-    damage = attacker["atk"] - (math.log10(defender["def"])/10 + 0.003*defender["def"])
-
-    if damage < 1:
-        damage = 1
-
-    defender["current_hp"] -= damage
-    if defender["current_hp"] < 0:
-        defender["current_hp"] = 0
-
-    message = f"{attacker['name']} used {move['name']} and dealt {damage} damage."
-    state["log"].append(message)
-
-    # Check if defender is defeated
-    if defender["current_hp"] == 0:
-        state["winner"] = attacker_key
-        state["log"].append(f"{defender['name']} is defeated!")
-    else:
-        # Switch turns if no one has won yet
-        state["turn"] = defender_key
-
-    return state
+def attack(attacker, defender, move_name):
+    defense = defender['def']
+    damage = attacker['atk'] * (1 - (0.1 * math.log10(defense) + 0.002 * defense))
+    print(damage)
+    true_damage = round(damage ** ((math.log10(10-move_name["pp"])) / 2.5) * 10)
+    print(true_damage)
+    return true_damage

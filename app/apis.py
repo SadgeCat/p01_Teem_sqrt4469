@@ -154,3 +154,19 @@ def get_anime_character(id):
         "moves": moves,
         "reroll": False
     }
+
+def get_insult():
+    try:
+        with urllib.request.urlopen("https://evilinsult.com/generate_insult.php?lang=en&type=json") as response:
+            data = response.read()
+        result = json.loads(data.decode('utf-8'))
+        insult = result["insult"]
+        encode_insult = urllib.parse.quote(insult)
+        with urllib.request.urlopen(f"https://www.purgomalum.com/service/json?text={encode_insult}") as response:
+            data = response.read()
+        result = json.loads(data.decode('utf-8'))
+        filtered = result["result"]
+        return filtered
+    except Exception as e:
+        print("Insult error: ", e)
+        return "oops no insult for you"
