@@ -69,9 +69,10 @@ def create_game_state():
 
 #add button to switch pokemon mid-game
 def switch_Character():
-    if(button is pressed):
+    return
         
-
+def attack():
+    return
 
 def apply_move(state, move_key):
 

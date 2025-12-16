@@ -4,7 +4,7 @@
 # P01: ArRESTed Development
 # Dec 2025
 
-import json, urllib.request, time, os
+import json, urllib.request, time, os, uuid
 import random, math
 
 def get_random_profile_pic():
@@ -97,6 +97,7 @@ def get_superhero(id):
             moves = get_random_moves()
 
             return {
+                "id": str(uuid.uuid4()),
                 "name": result["name"],
                 "image": result["images"]["md"],
                 "hp": hp,
@@ -105,7 +106,7 @@ def get_superhero(id):
                 "speed": speed,
                 "def": defense,
                 "moves": moves,
-                "reroll": false
+                "reroll": False
             }
         except urllib.error.HTTPError:
             id = 0
@@ -142,13 +143,14 @@ def get_anime_character(id):
     moves = get_random_moves()
 
     return {
+        "id": str(uuid.uuid4()),
         "name": character["name"],
         "image": character["images"]["jpg"]["image_url"],
         "hp": round(0.5 * character["favorites"] ** 0.5), # hp = 0.5 * #favorites ** 0.5
         "current_hp": round(0.5 * character["favorites"] ** 0.5),
-        "atk": 10 * len(character["anime"]), # atk = #anime * 10
-        "speed": 10 * len(character["manga"]), # speed = #manga * 10
-        "def": 10 * len(character["voices"]), # defense = #voice * 10
-        "moves": moves
-        "reroll": false
+        "atk": random.randint(5,10) * len(character["anime"]), # atk = #anime * random.randint(5,10)
+        "speed": random.randint(5,10) * len(character["manga"]), # speed = #manga * random.randint(5,10)
+        "def": random.randint(5,10) * len(character["voices"]), # defense = #voice * random.randint(5,10)
+        "moves": moves,
+        "reroll": False
     }

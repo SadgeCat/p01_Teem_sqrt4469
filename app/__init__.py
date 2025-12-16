@@ -14,6 +14,7 @@ import sqlite3, random
 
 from apis import get_random_profile_pic
 from game import random_team
+from battle import attack
 
 DB_FILE="discobandit.db"
 
@@ -90,6 +91,7 @@ def login():
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
+    session.pop('game_state', None)
     if "username" not in session:
         return redirect(url_for('login'))
     db = sqlite3.connect(DB_FILE)
@@ -129,10 +131,18 @@ def menu():
 @app.route("/reroll", methods=['GET', 'POST']) #p is player int, c is character int
 def reroll(one, two):
 
+    one = []
     if request.method == 'POST':
-        one = []
-        two = []
-    # one are two are lists retrieved from html, 0 is no change, 1 is change
+        for
+            one = request.form.get('').strip()
+
+    # one are two are lists retrieved from html, will have rerollCheck1_{{ card }} or rerollCheck2_{{ card }}
+    # if list is not empty, for each card in list, reroll it and assign new value
+    for card in list:
+        if card["reroll"] = True:
+            newcharacter = make_random_fighter()
+            newteam[x] = newcharacter
+
     for x in one:
         if x == 1:
             newteam = session["team1"]
@@ -151,7 +161,59 @@ def reroll(one, two):
 
 @app.route("/game", methods=['GET', 'POST'])
 def game():
-    return render_template('game.html')
+    if "game_state" not in session:
+        session["game_state"] = {
+            "p1_team": session["team1"],
+            "p2_team": session["team2"],
+            "p1_active": session["team1"][0],
+            "p2_active": session["team2"][0],
+            "turn": random.choice(["p1", "p2"]),
+        }
+
+    game = session["game_state"]
+    p1_active = game["p1_active"]
+    p2_active = game["p2_active"]
+
+    if request.method == "POST":
+        action = request.form.get("action")
+
+        if game["turn"] == "p1":
+            if action.startswith("switch_"):
+                char_id = action.replace("switch_", "")
+                for char in game['p1_team']:
+                    if char['id'] == char_id and char['current_hp'] > 0:
+                        game['p1_active'] = char
+                game["turn"] = "p2"
+            else:
+                attack(p1_active, p2_active, action) #need attack function
+                game["turn"] = "p2"
+
+        elif game["turn"] == "p2":
+            if action.startswith("switch_"):
+                char_id = action.replace("switch_", "")
+                for char in game['p2_team']:
+                    if char['id'] == char_id and char['current_hp'] > 0:
+                        game['p2_active'] = char
+                game["turn"] = "p1"
+            else:
+                attack(p2_active, p1_active, action) # need atk func
+                game["turn"] = "p1"
+
+        session["game_state"] = game
+        return redirect(url_for("game"))
+
+    p1_hp_percent = int((p1_active["current_hp"] / p1_active["hp"]) * 100)
+    p2_hp_percent = int((p2_active["current_hp"] / p2_active["hp"]) * 100)
+
+    return render_template('game.html',
+                           player = session['username'],
+                           p1_team = game["p1_team"],
+                           p2_team = game["p2_team"],
+                           p1_active = p1_active,
+                           p2_active = p2_active,
+                           p1_hp_percent = p1_hp_percent,
+                           p2_hp_percent = p2_hp_percent,
+                           turn = game["turn"])
 
 @app.route("/gameover", methods=['GET', 'POST'])
 def gameover():
@@ -168,6 +230,7 @@ def logout():
     session.pop('team2', None) # remove loadout
     session.pop('team1_which', None)
     session.pop('team2_which', None)
+    session.pop('game_state', None)
     return redirect(url_for('login'))
 
 
