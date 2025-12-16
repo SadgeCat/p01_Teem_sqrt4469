@@ -14,7 +14,7 @@ import sqlite3, random
 
 from apis import get_random_profile_pic, get_insult
 from game import random_team
-from battle import attack
+from battle import attack, switch_defeated_character
 
 DB_FILE="discobandit.db"
 
@@ -158,7 +158,7 @@ def game():
     game = session["game_state"]
     p1_active = game["p1_team"][game['p1_active_index']]
     p2_active = game["p2_team"][game['p2_active_index']]
-    
+
     if request.method == "POST":
         action = request.form.get("action")
 
@@ -212,6 +212,11 @@ def game():
                     game["turn"] = "p1"
                     game['log'].append(f"{p2_active['name']} used {action}")
                     game['log'].append(f"{p1_active['name']} took {dmg} damage")
+
+        if p1_active['current_hp'] <= 0:
+            index = switch_defeated_character(game['p1_team'])
+            if index == -1:
+                return redirect(url_for("gameover"))
 
         session["game_state"] = game
         session.modified = True
