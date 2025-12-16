@@ -12,7 +12,7 @@ from flask import redirect, url_for
 
 import sqlite3, random
 
-from apis import get_random_profile_pic
+from apis import get_random_profile_pic, get_insult
 from game import random_team
 from battle import attack
 
@@ -147,45 +147,75 @@ def game():
         session["game_state"] = {
             "p1_team": session["team1"],
             "p2_team": session["team2"],
-            "p1_active": session["team1"][0],
-            "p2_active": session["team2"][0],
+            "p1_active_index": 0,
+            "p2_active_index": 0,
+            "p1_insult": "",
+            "p2_insult": "",
             "turn": random.choice(["p1", "p2"]),
+            "log": ["3.. 2.. 1.. Start!"]
         }
 
     game = session["game_state"]
-    p1_active = game["p1_active"]
-    p2_active = game["p2_active"]
+    p1_active = game["p1_team"][game['p1_active_index']]
+    p2_active = game["p2_team"][game['p2_active_index']]
     
     if request.method == "POST":
         action = request.form.get("action")
 
-        if game["turn"] == "p1":
-            if action.startswith("switch_"):
-                char_id = action.replace("switch_", "")
-                for char in game['p1_team']:
-                    if char['id'] == char_id and char['current_hp'] > 0:
-                        game['p1_active'] = char
-                game["turn"] = "p2"
-            else:
-                attack(p1_active, p2_active, action) #need attack function
-                game["turn"] = "p2"
+        if action == "p1_taunt":
+            game['p1_insult'] = get_insult()
+            print(game['p1_insult'])
+        elif action == "p2_taunt":
+            game['p2_insult'] = get_insult()
+        else:
 
-        elif game["turn"] == "p2":
-            if action.startswith("switch_"):
-                char_id = action.replace("switch_", "")
-                for char in game['p2_team']:
-                    if char['id'] == char_id and char['current_hp'] > 0:
-                        game['p2_active'] = char
-                game["turn"] = "p1"
-            else:
-                attack(p2_active, p1_active, action) # need atk func
-                game["turn"] = "p1"
+            if game["turn"] == "p1":
+                if action.startswith("switch_"):
+                    char_id = action.replace("switch_", "")
+                    for i, char in enumerate(game['p1_team']):
+                        if char['id'] == char_id and char['current_hp'] > 0:
+                            game['p1_active_index'] = i
+                            p1_active = game["p1_team"][game['p1_active_index']]
+                            break
+                    game["turn"] = "p2"
+                    game['log'].append(f"{session['username']} switched to {p1_active['name']}")
+                else:
+                    moves = p1_active["moves"]
+                    for move in moves:
+                        if move['name'] == action:
+                            attack_move = move
+                    dmg = attack(p1_active, p2_active, attack_move) #need attack function
+                    attack_move['pp'] -= 1
+                    p2_active['current_hp'] -= dmg
+                    game["turn"] = "p2"
+                    game['log'].append(f"{p1_active['name']} used {action}")
+                    game['log'].append(f"{p2_active['name']} took {dmg} damage")
+
+            elif game["turn"] == "p2":
+                if action.startswith("switch_"):
+                    char_id = action.replace("switch_", "")
+                    for i, char in enumerate(game['p2_team']):
+                        if char['id'] == char_id and char['current_hp'] > 0:
+                            game['p2_active_index'] = i
+                            p2_active = game["p2_team"][game['p2_active_index']]
+                            break
+                    game["turn"] = "p1"
+                    game['log'].append(f"Player 2 switched to {p2_active['name']}")
+                else:
+                    moves = p2_active["moves"]
+                    for move in moves:
+                        if move['name'] == action:
+                            attack_move = move
+                    dmg = attack(p2_active, p1_active, attack_move) # need atk func
+                    attack_move['pp'] -= 1
+                    p1_active['current_hp'] -= dmg
+                    game["turn"] = "p1"
+                    game['log'].append(f"{p2_active['name']} used {action}")
+                    game['log'].append(f"{p1_active['name']} took {dmg} damage")
 
         session["game_state"] = game
+        session.modified = True
         return redirect(url_for("game"))
-    
-    p1_hp_percent = int((p1_active["current_hp"] / p1_active["hp"]) * 100)
-    p2_hp_percent = int((p2_active["current_hp"] / p2_active["hp"]) * 100)
 
     return render_template('game.html',
                            player = session['username'],
@@ -193,9 +223,12 @@ def game():
                            p2_team = game["p2_team"],
                            p1_active = p1_active,
                            p2_active = p2_active,
-                           p1_hp_percent = p1_hp_percent,
-                           p2_hp_percent = p2_hp_percent,
-                           turn = game["turn"])
+                           p1_hp_percent = int((p1_active["current_hp"] / p1_active["hp"]) * 100),
+                           p2_hp_percent = int((p2_active["current_hp"] / p2_active["hp"]) * 100),
+                           p1_insult = game['p1_insult'],
+                           p2_insult = game['p2_insult'],
+                           turn = game["turn"],
+                           log = game['log'])
 
 @app.route("/gameover", methods=['GET', 'POST'])
 def gameover():

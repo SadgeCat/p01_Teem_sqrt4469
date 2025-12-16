@@ -66,11 +66,11 @@ def create_game_state():
     }
     return state
 
-#add button to switch pokemon mid-game
-def switch_Character():
-    return
 
 def attack(attacker, defender, move_name):
-    move = attacker["moves"][move_name]
-    defender["current_hp"] = defender["current_hp"] - ((move["damage"] ** (math.log10(10-move["pp"])) / 2.5) * 20)
-    return
+    defense = defender['def']
+    damage = attacker['atk'] * (1 - (0.1 * math.log10(defense) + 0.002 * defense))
+    print(damage)
+    true_damage = round(damage ** ((math.log10(10-move_name["pp"])) / 2.5) * 10)
+    print(true_damage)
+    return true_damage

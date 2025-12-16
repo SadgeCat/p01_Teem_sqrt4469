@@ -125,3 +125,9 @@ Work done in class:
 - Matthew continued to work on reroll feature for character selection
 - Thomas worked on character attacking using the damage formula we came up with
 - Fetched insult from insults api and filtered it using the purgo api
+
+yuhangP -- 2025-12-15 22:48
+- added button that allowed players to give an insult to the other player
+- working attack function
+- worked on game logic (if hp <= 0 --> can't switch to it anymore, etc.)
+- added a game log that keep tracks of damage dealt, characters switched to, etc.
