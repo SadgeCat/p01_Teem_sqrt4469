@@ -27,7 +27,7 @@
     }
     .image-container img {
       max-width: 100%;
-      height: auto;
+      height: 85%;
     }
     .centered-button {
       position: absolute;
@@ -37,9 +37,12 @@
   <title>Game Over</title>
 </head>
 <body>
+  <p style="color: white; text-align: center" class="display-6">Player {{ player }} Has Won </p>
 
   <div class="image-container">
+
     <img src="../static/images/GameOver.jpg" alt="Game Over">
+
     <a href="{{ url_for('home') }}" class="btn btn-primary btn-lg centered-button">Back To Homepage</a>
   </div>
 
