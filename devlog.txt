@@ -116,6 +116,12 @@ michelleC -- 2025-12-15
 yuhangP -- 2025-12-14 22:00
 - tweaked game balancing stats since anime characters lowkey overpowered
 
-
 thomasM -- 2025-12-15 11:44
 - Got rid of redundant functions and also added the attack function for characters to attack each other in game
+
+yuhangP -- 2025-12-15 11:45
+Work done in class:
+- Michelle improved bootstrap for the home page and also added it to most pages
+- Matthew continued to work on reroll feature for character selection
+- Thomas worked on character attacking using the damage formula we came up with
+- Fetched insult from insults api and filtered it using the purgo api
