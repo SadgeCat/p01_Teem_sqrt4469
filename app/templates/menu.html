@@ -15,6 +15,21 @@
     <title>Choose Your Team</title>
 </head>
 <body>
+<<<<<<< HEAD
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Hero Wars</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+=======
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <a class="navbar-brand">Hero Wars</a>
@@ -31,14 +46,17 @@
      </div>
    </div>
   </nav>
+>>>>>>> 17d2e3b59e6f463ba67d3c4322bb0dba68c4b0dd
     <br>
     <h2>Character Loadouts</h2>
     <br>
     <div class="container">
+      <form method="POST">
         <div class="row">
             <h3>Player 1: {{ player }} (logged in)</h3>
             {% if card_list1 %}
                 {% for card in card_list1 %}
+
                 <div class="col-sm-2">
                     <div class="card" style="width: 12rem;">
                         <img src="{{ card['image'] }}" class="card-img-top" alt="...">
@@ -47,9 +65,9 @@
                             <p class="card-text">HP: {{ card["hp"] }} | ATK: {{ card["atk"] }} | SPD: {{ card["speed"] }} | DEF: {{ card["def"] }}</p>
                             <p class="card-text">{{ card["moves"][0]["name"] }}: pp = {{ card["moves"][0]["pp"] }} <br> {{ card["moves"][1]["name"] }}: pp = {{ card["moves"][1]["pp"] }} <br> {{ card["moves"][2]["name"] }}: pp = {{ card["moves"][2]["pp"] }} <br> {{ card["moves"][3]["name"] }}: pp = {{ card["moves"][3]["pp"] }}</p>
                             <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id=a>
-                            <label class="form-check-label" for=a>
-                            </label>
+                              <input class="form-check-input" type="checkbox" value="" id="{{ loop.index }}">
+                              <label class="form-check-label" for="{{ loop.index }}">Re-roll this character
+                              </label>
                             </div>
                         </div>
                     </div>
@@ -70,9 +88,9 @@
                             <p class="card-text">HP: {{ card["hp"] }} | ATK: {{ card["atk"] }} | SPD: {{ card["speed"] }} | DEF: {{ card["def"] }}</p>
                             <p class="card-text">{{ card["moves"][0]["name"] }}: pp = {{ card["moves"][0]["pp"] }} <br> {{ card["moves"][1]["name"] }}: pp = {{ card["moves"][1]["pp"] }} <br> {{ card["moves"][2]["name"] }}: pp = {{ card["moves"][2]["pp"] }} <br> {{ card["moves"][3]["name"] }}: pp = {{ card["moves"][3]["pp"] }}</p>
                             <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="a">
-                            <label class="form-check-label" for="a">
-                            </label>
+                              <input class="form-check-input" type="checkbox" value="" id="{{ loop.index + 6 }}">
+                              <label class="form-check-label" for="{{ loop.index + 6 }}">Re-roll this character
+                              </label>
                             </div>
                         </div>
                     </div>
@@ -81,14 +99,16 @@
             {% endif %}
         </div>
         <br><br>
+
+          <button type="button" class="btn btn-primary" type="submit" name="action">Reroll</button>
+
+          </form>
         </div>
         <div>
-            <a href="{{ url_for('reroll') }}" class="btn btn-primary">Reroll Character</a>
         </div>
         <div>
             <a href="{{ url_for('game') }}" class="btn btn-primary"> Start Game</a>
         </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>

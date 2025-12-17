@@ -105,7 +105,8 @@ def get_superhero(id):
                 "atk": atk,
                 "speed": speed,
                 "def": defense,
-                "moves": moves
+                "moves": moves,
+                "reroll": False
             }
         except urllib.error.HTTPError:
             id = 0
@@ -150,7 +151,8 @@ def get_anime_character(id):
         "atk": random.randint(5,10) * len(character["anime"]), # atk = #anime * random.randint(5,10)
         "speed": random.randint(5,10) * len(character["manga"]), # speed = #manga * random.randint(5,10)
         "def": random.randint(5,10) * len(character["voices"]), # defense = #voice * random.randint(5,10)
-        "moves": moves
+        "moves": moves,
+        "reroll": False
     }
 
 def get_insult():

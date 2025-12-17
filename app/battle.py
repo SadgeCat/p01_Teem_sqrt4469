@@ -48,7 +48,8 @@ def make_random_fighter():
         "atk": int(base["atk"]),
         "def": int(base["def"]),
         "speed": int(base["speed"]),
-        "source": source
+        "source": source,
+        "reroll": false
     }
     return fighter
 

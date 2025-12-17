@@ -131,13 +131,32 @@ def menu():
 
 @app.route("/reroll", methods=['GET', 'POST']) #p is player int, c is character int
 def reroll(one, two):
-    # one are two are lists retrieved from html, giving true or false to rerolling
-    newteam = session["team" + str(p)]
+
+    list = []
+    newteam1 = session["team1"]
+    newteam2 = session["team2"]
+    if request.method == "POST":
+        request.form.getlist("reroll")
+
+    # one are two are lists retrieved from html, will have rerollCheck1_{{ card }} or rerollCheck2_{{ card }}
+    # if list is not empty, for each card in list, reroll it and assign new value
+    for card in list:
+        if card > 12 =:
+
+            newteam[x] = newcharacter
+
     for x in one:
-        if x:
-            newteam = session["team" + str(p)]
+        if x == 1:
+            newteam = session["team1"]
             newcharacter = make_random_fighter()
-            # newteam[c] = newcharacter
+            newteam[x] = newcharacter
+            session["team1"] = newteam
+    for x in two:
+        if x == 1:
+            newteam = session["team2"]
+            newcharacter = make_random_fighter()
+            newteam[x] = newcharacter
+            session["team2"] = newteam
     return render_template(menu.html,
                            card_list1 = session["team1"],
                            card_list2 = session["team2"])
