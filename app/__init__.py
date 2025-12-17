@@ -130,19 +130,19 @@ def menu():
 
 
 @app.route("/reroll", methods=['GET', 'POST']) #p is player int, c is character int
-def reroll(one, two):
-
-    list = []
+def reroll():
     newteam1 = session["team1"]
     newteam2 = session["team2"]
+    cardlist = []
     if request.method == "POST":
-        request.form.getlist("reroll")
+        cardlist = request.form
+    #for card in cardlist:
 
     # one are two are lists retrieved from html, will have rerollCheck1_{{ card }} or rerollCheck2_{{ card }}
     # if list is not empty, for each card in list, reroll it and assign new value
+    '''
     for card in list:
         if card > 12 =:
-
             newteam[x] = newcharacter
 
     for x in one:
@@ -157,6 +157,7 @@ def reroll(one, two):
             newcharacter = make_random_fighter()
             newteam[x] = newcharacter
             session["team2"] = newteam
+    '''
     return render_template(menu.html,
                            card_list1 = session["team1"],
                            card_list2 = session["team2"])
@@ -263,7 +264,7 @@ def game():
                             p1_active = game['p1_team'][index]
                             game['log'].append(f"{prev_active} fainted.. {session['username']} switched to {p1_active['name']}")
 
-        
+
 
         session["game_state"] = game
         session.modified = True

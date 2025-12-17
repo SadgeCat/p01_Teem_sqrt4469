@@ -15,7 +15,6 @@
     <title>Choose Your Team</title>
 </head>
 <body>
-<<<<<<< HEAD
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Hero Wars</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,24 +28,6 @@
             </ul>
         </div>
     </nav>
-=======
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand">Hero Wars</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="{{ url_for('home') }}">Home</a>
-          </li>
-       </ul>
-     </div>
-   </div>
-  </nav>
->>>>>>> 17d2e3b59e6f463ba67d3c4322bb0dba68c4b0dd
     <br>
     <h2>Character Loadouts</h2>
     <br>
@@ -100,7 +81,7 @@
         </div>
         <br><br>
 
-          <button type="button" class="btn btn-primary" type="submit" name="action">Reroll</button>
+          <a href="{{ url_for('reroll') }}" class="btn btn-primary"> Reroll</a>
 
           </form>
         </div>
