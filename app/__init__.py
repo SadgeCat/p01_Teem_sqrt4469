@@ -153,12 +153,21 @@ def game():
             "p1_insult": "",
             "p2_insult": "",
             "turn": random.choice(["p1", "p2"]),
-            "log": ["3.. 2.. 1.. Start!"]
+            "log": ["3.. 2.. 1.. Start!"],
+            "round": 0
         }
 
     game = session["game_state"]
     p1_active = game["p1_team"][game['p1_active_index']]
     p2_active = game["p2_team"][game['p2_active_index']]
+    if game['round'] == 0:
+        speed1 = p1_active['speed']
+        speed2 = p2_active['speed']
+        if speed1 > speed2:
+            game['turn'] = "p1"
+        else:
+            game['turn'] = "p2"
+        game['round'] += 1
 
     if request.method == "POST":
         action = request.form.get("action")
@@ -244,7 +253,7 @@ def game():
                             p1_active = game['p1_team'][index]
                             game['log'].append(f"{prev_active} fainted.. {session['username']} switched to {p1_active['name']}")
 
-        
+
 
         session["game_state"] = game
         session.modified = True

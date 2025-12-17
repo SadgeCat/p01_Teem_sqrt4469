@@ -1,3 +1,9 @@
+# Yuhang Pan (PM), Matthew Ciu, Michelle Chen, Thomas Mackey
+# Hero Wars by Teem_sqrt4469
+# SoftDev
+# P01: ArRESTed Development
+# Dec 2025
+
 import random, math
 from apis import get_superhero, get_anime_character, get_superhero2
 
@@ -81,4 +87,3 @@ def switch_defeated_character(team):
         if defender["current_hp"] > 0:
             return i
     return -1
-    
