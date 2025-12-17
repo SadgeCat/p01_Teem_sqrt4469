@@ -78,7 +78,7 @@ def attack(attacker, defender, move_name):
 
 
 def switch_defeated_character(team):
-    for i, defender in enumerate[team]:
+    for i, defender in enumerate(team):
         if defender["current_hp"] > 0:
             return i
     return -1

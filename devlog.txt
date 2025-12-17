@@ -138,3 +138,13 @@ michelleC -- 2025-12-15 11:45
 
 thomasM -- 2025-12-16 11:46
 - added functions to check if a character was defeated and to check when the game is over
+
+yuhangP -- 2025-12-16 11:46
+Work done in class:
+- gameover page displays winner
+- added currency called rizu coins
+
+yuhangP -- 2025-12-16 21:32
+- updated README roster with roles
+- updates user info like wins/losses and #of rizu coins after a game ends, and sends winner info to gameover page
+- fix switch character logic when a character faints

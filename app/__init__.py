@@ -50,7 +50,7 @@ def register():
             return render_template("register.html", error="Username already exists")
 
         profile_pic = get_random_profile_pic()
-        c.execute("INSERT INTO users (name, password, wins, losses, profile_pic) VALUES (?, ?, ?, ?, ?)", (username, password, 0, 0, profile_pic))
+        c.execute("INSERT INTO users (name, password, wins, losses, rizu_coin, profile_pic) VALUES (?, ?, ?, ?, ?, ?)", (username, password, 0, 0, 0, profile_pic))
         db.commit()
         db.close()
 
@@ -98,12 +98,13 @@ def home():
     c = db.cursor()
 
     user = session["username"]
-    wins, losses, profile_pic = c.execute("SELECT wins, losses, profile_pic FROM users WHERE name=?", (user,)).fetchone()
+    wins, losses, rizu_coin, profile_pic = c.execute("SELECT wins, losses, rizu_coin, profile_pic FROM users WHERE name=?", (user,)).fetchone()
 
     return render_template('home.html',
                            username = user,
                            wins = wins,
                            losses = losses,
+                           rizu_coin = rizu_coin,
                            profile_pic = profile_pic)
 
 @app.route("/menu", methods=['GET', 'POST'])
@@ -209,6 +210,21 @@ def game():
                     game["turn"] = "p2"
                     game['log'].append(f"{p1_active['name']} used {action}")
                     game['log'].append(f"{p2_active['name']} took {dmg} damage")
+                    if p2_active['current_hp'] <= 0:
+                        index = switch_defeated_character(game['p2_team'])
+                        if index == -1:
+                            db = sqlite3.connect(DB_FILE)
+                            c = db.cursor()
+                            wins, rizu_coin = c.execute("SELECT wins, rizu_coin FROM users WHERE name=?", (session['username'],)).fetchone()
+                            c.execute("UPDATE users SET wins=?, rizu_coin=? WHERE name=?", (wins+1, rizu_coin+10, session['username']))
+                            db.commit()
+                            db.close()
+                            return redirect(url_for("gameover", winner = session['username']))
+                        else:
+                            prev_active = p2_active['name']
+                            game['p2_active_index'] = index
+                            p2_active = game['p2_team'][index]
+                            game['log'].append(f"{prev_active} fainted.. Player 2 switched to {p2_active['name']}")
 
             elif game["turn"] == "p2":
                 if action.startswith("switch_"):
@@ -231,11 +247,23 @@ def game():
                     game["turn"] = "p1"
                     game['log'].append(f"{p2_active['name']} used {action}")
                     game['log'].append(f"{p1_active['name']} took {dmg} damage")
+                    if p1_active['current_hp'] <= 0:
+                        index = switch_defeated_character(game['p1_team'])
+                        if index == -1:
+                            db = sqlite3.connect(DB_FILE)
+                            c = db.cursor()
+                            losses = c.execute("SELECT losses FROM users WHERE name=?", (session['username'],)).fetchone()
+                            c.execute("UPDATE users SET losses=? WHERE name=?", (losses+1, session['username']))
+                            db.commit()
+                            db.close()
+                            return redirect(url_for("gameover", winner = "Player 2"))
+                        else:
+                            prev_active = p1_active['name']
+                            game['p1_active_index'] = index
+                            p1_active = game['p1_team'][index]
+                            game['log'].append(f"{prev_active} fainted.. {session['username']} switched to {p1_active['name']}")
 
-        if p1_active['current_hp'] <= 0:
-            index = switch_defeated_character(game['p1_team'])
-            if index == -1:
-                return redirect(url_for("gameover"))
+        
 
         session["game_state"] = game
         session.modified = True
@@ -256,7 +284,9 @@ def game():
 
 @app.route("/gameover", methods=['GET', 'POST'])
 def gameover():
-    return render_template('gameover.html')
+    winner = request.args.get('winner')
+    return render_template('gameover.html',
+                           winner = winner)
 
 @app.route("/error")
 def error():
