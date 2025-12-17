@@ -148,3 +148,7 @@ yuhangP -- 2025-12-16 21:32
 - updated README roster with roles
 - updates user info like wins/losses and #of rizu coins after a game ends, and sends winner info to gameover page
 - fix switch character logic when a character faints
+
+yuhangP -- 2025-12-17 11:18
+Work done in class:
+- Set speed of 1st round to whoever has greater speed
