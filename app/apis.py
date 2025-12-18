@@ -7,6 +7,9 @@
 import json, urllib.request, time, os, uuid
 import random, math
 
+Jikan_page_cache = {}
+Jikan_id_cache = {}
+
 def get_random_profile_pic():
     randomint = random.randint(1, 1025)
     with urllib.request.urlopen(f"https://pokeapi.co/api/v2/pokemon/{randomint}/") as response:
@@ -131,14 +134,22 @@ def get_anime_character(id):
     count = id % 25 + 1
     page = id // 25 + 1
 
-    data = check_rate(f"https://api.jikan.moe/v4/characters?order_by=favorites&sort=desc&limit={count}&page={page}")
-    result = json.loads(data.decode('utf-8'))["data"]
+    if page in Jikan_page_cache:
+        result = Jikan_page_cache[page]
+    else:
+        data = check_rate(f"https://api.jikan.moe/v4/characters?order_by=favorites&sort=desc&limit=25&page={page}")
+        result = json.loads(data.decode('utf-8'))["data"]
+        Jikan_page_cache[page] = result
 
     chosen = random.choice(result)
     mal_id = chosen["mal_id"]
 
-    data2 = check_rate(f"https://api.jikan.moe/v4/characters/{mal_id}/full")
-    character = json.loads(data2.decode('utf-8'))["data"]
+    if mal_id in Jikan_id_cache:
+        character = Jikan_id_cache[mal_id]
+    else:
+        data2 = check_rate(f"https://api.jikan.moe/v4/characters/{mal_id}/full")
+        character = json.loads(data2.decode('utf-8'))["data"]
+        Jikan_id_cache[mal_id] = character
 
     moves = get_random_moves()
 

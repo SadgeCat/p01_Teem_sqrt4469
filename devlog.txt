@@ -152,3 +152,7 @@ yuhangP -- 2025-12-16 21:32
 yuhangP -- 2025-12-17 11:18
 Work done in class:
 - Set speed of 1st round to whoever has greater speed
+
+yuhangP -- 2025-12-17 20:23
+- cached page and character result from jikan api in dictionaries
+- updated format of columns in game page so battle log is larger, looks nicer ig
