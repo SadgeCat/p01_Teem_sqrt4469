@@ -12,7 +12,7 @@ from flask import redirect, url_for
 
 import sqlite3, random
 
-from apis import get_random_profile_pic, get_insult
+from apis import get_random_profile_pic, get_insult, get_anime_character, get_superhero
 from game import random_team
 from battle import attack, switch_defeated_character
 
@@ -111,6 +111,8 @@ def home():
 def menu():
     which = ["anime", "superhero"]
     random.shuffle(which)
+    if 'which' not in session:
+        session['which'] = which[0]
     if "team1" not in session:
         team1 = random_team(which[0])
         if team1 == None:
@@ -123,6 +125,27 @@ def menu():
             return redirect(url_for('error'))
         session["team2"] = team2
         session["team2_which"] = which[0]
+
+    if request.method == "POST":
+        print("post")
+        indices = request.form.getlist("reroll")
+        print(indices)
+        for idx in indices:
+            index = int(idx)
+            if index <= 6:
+                print("swapped")
+                if session['which'] == "anime":
+                    session['team1'][index - 1] = get_anime_character(0)
+
+                else:
+                    session['team1'][index - 1] = get_superhero(0)
+            else:
+                print("swapped")
+                if session['which'] == "anime":
+                    session['team2'][index - 7] = get_superher(0)
+                else:
+                    session['team2'][index - 7] = get_anime_character(0)
+
     return render_template('menu.html',
                            player = session["username"],
                            card_list1 = session["team1"],
@@ -133,10 +156,12 @@ def menu():
 def reroll():
     newteam1 = session["team1"]
     newteam2 = session["team2"]
-    cardlist = []
+    '''
     if request.method == "POST":
-        cardlist = request.form
-    #for card in cardlist:
+        indices = request.form.get("reroll")
+    for index in indices:
+        if index <= 6:
+    '''
 
     # one are two are lists retrieved from html, will have rerollCheck1_{{ card }} or rerollCheck2_{{ card }}
     # if list is not empty, for each card in list, reroll it and assign new value
