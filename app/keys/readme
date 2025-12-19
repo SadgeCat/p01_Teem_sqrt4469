@@ -1,5 +1,6 @@
 SuperheroAPI
-- Requires you to login with your GitHub account to get an access token or key.
+- Doesn't require a key.
+- Append .json to the end of your url in your call. 
  
 JikanAPI
 - Doesn't require a key.
