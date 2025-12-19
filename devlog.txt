@@ -156,3 +156,10 @@ Work done in class:
 yuhangP -- 2025-12-17 20:23
 - cached page and character result from jikan api in dictionaries
 - updated format of columns in game page so battle log is larger, looks nicer ig
+
+yuhangP -- 2025-12-18 11:45
+Work done in class:
+- reroll character feature is now working
+
+yuhangP -- 2025-12-18 20:46
+- saved session after rerolling new character
