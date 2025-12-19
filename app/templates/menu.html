@@ -56,6 +56,10 @@
                 {% endfor %}
             {% endif %}
         </div>
+        {% if error %}
+        <br><br>
+        <div class="alert alert-danger mt-3 text-center">{{ error }}</div>
+        {% endif %}
         <br><br>
         <div class="row">
             <h3>Player 2</h3>

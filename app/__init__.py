@@ -130,6 +130,12 @@ def menu():
         print("post")
         indices = request.form.getlist("reroll")
         print(indices)
+        cost = len(indices)
+        db = sqlite3.connect(DB_FILE)
+        c = db.cursor()
+        rizu_coin = c.execute("SELECT rizu_coin FROM users WHERE name=?", (session['username'],)).fetchone()
+        if rizu_coin < cost:
+            return redirect(url_for('menu'))
         for idx in indices:
             index = int(idx)
             if index <= 6:
