@@ -136,15 +136,15 @@ def menu():
                 print("swapped")
                 if session['which'] == "anime":
                     session['team1'][index - 1] = get_anime_character(0)
-
                 else:
                     session['team1'][index - 1] = get_superhero(0)
             else:
                 print("swapped")
                 if session['which'] == "anime":
-                    session['team2'][index - 7] = get_superher(0)
+                    session['team2'][index - 7] = get_superhero(0)
                 else:
                     session['team2'][index - 7] = get_anime_character(0)
+            session.modified = True
 
     return render_template('menu.html',
                            player = session["username"],
