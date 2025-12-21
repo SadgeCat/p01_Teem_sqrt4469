@@ -4,7 +4,7 @@
 # P01: ArRESTed Development
 # Dec 2025
 import random
-from apis import get_pokemon, get_superhero, get_anime_character
+from apis import get_superhero, get_anime_character
 
 url = "https://pokeapi.co/api/v2/pokemon/"
 
