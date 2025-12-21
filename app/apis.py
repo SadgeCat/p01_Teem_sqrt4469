@@ -4,6 +4,8 @@
 # P01: ArRESTed Development
 # Dec 2025
 
+from flask import redirect, url_for
+
 import json, urllib.request, time, os, uuid
 import random, math
 
@@ -126,7 +128,7 @@ def check_rate(url):
                 print("reached quota! waiting 3 seconds...")
                 time.sleep(3)
             else:
-                raise
+                return redirect(url_for('home'))
 
 def get_anime_character(id):
     if id == 0:

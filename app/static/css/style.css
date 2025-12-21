@@ -1,4 +1,4 @@
-#loading-overlay {
+#loading_image {
   position: fixed;
   inset: 0;
   background: white;
@@ -8,11 +8,11 @@
   z-index: 4469;
 }
 
-#page-content {
+#page_content {
   display: none;
 }
 
-#loading-overlay.fade-out {
+#loading_image.fade-out {
   opacity: 0;
   transition: opacity 0.3s ease;
 }

@@ -4,6 +4,5 @@ window.addEventListener('load', () => {
 });
 
 let showloading = () => {
-    document.getElementById('page_content').style.display = "none";
     document.getElementById('loading_image').style.display = "flex";
 }
