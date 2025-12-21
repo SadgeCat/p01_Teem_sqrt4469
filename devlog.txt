@@ -176,3 +176,7 @@ yuhangP -- 2025-12-21 12:50
 
 yuhangP -- 2025-12-21 13:16
 - it works for reroll too now
+Design Doc updates:
+- included new html pages like error.html, loadingpage.html in the program components
+- added how we calculate stats for the battle
+- included rizu coins and explained game in more detail
