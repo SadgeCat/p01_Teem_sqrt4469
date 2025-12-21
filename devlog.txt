@@ -163,3 +163,16 @@ Work done in class:
 
 yuhangP -- 2025-12-18 20:46
 - saved session after rerolling new character
+
+yuhangP -- 2025-12-19 11:45
+Work done in class:
+- started on loading page
+- made rerolling character cost rizu coins
+- users start with 67 rizu coins, each wins gives 10
+
+yuhangP -- 2025-12-21 12:50
+- redirects to loading page when you go to menu page but not for when you reroll
+- made gif appear loading page doesn't really work since it only appears after the data is fetched
+
+yuhangP -- 2025-12-21 13:16
+- it works for reroll too now

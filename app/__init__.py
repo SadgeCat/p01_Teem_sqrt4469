@@ -50,7 +50,7 @@ def register():
             return render_template("register.html", error="Username already exists")
 
         profile_pic = get_random_profile_pic()
-        c.execute("INSERT INTO users (name, password, wins, losses, rizu_coin, profile_pic) VALUES (?, ?, ?, ?, ?, ?)", (username, password, 0, 0, 0, profile_pic))
+        c.execute("INSERT INTO users (name, password, wins, losses, rizu_coin, profile_pic) VALUES (?, ?, ?, ?, ?, ?)", (username, password, 0, 0, 67, profile_pic))
         db.commit()
         db.close()
 
@@ -91,6 +91,10 @@ def login():
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
+    session.pop('team1', None) # remove loadout
+    session.pop('team2', None) # remove loadout
+    session.pop('team1_which', None)
+    session.pop('team2_which', None)
     session.pop('game_state', None)
     if "username" not in session:
         return redirect(url_for('login'))
@@ -107,6 +111,12 @@ def home():
                            rizu_coin = rizu_coin,
                            profile_pic = profile_pic)
 
+@app.route("/loadingpage")
+def loadingpage():
+    redirect_to = url_for('menu')
+    return render_template('loadingpage.html',
+                           redirect_to = redirect_to)
+
 @app.route("/menu", methods=['GET', 'POST'])
 def menu():
     which = ["anime", "superhero"]
@@ -117,14 +127,18 @@ def menu():
         team1 = random_team(which[0])
         if team1 == None:
             return redirect(url_for('error'))
+        #dispaly gif
         session["team1"] = team1
         session["team1_which"] = which[0]
+        #hide gif
     if "team2" not in session:
         team2 = random_team(which[1])
         if team2 == None:
             return redirect(url_for('error'))
+        #display gif
         session["team2"] = team2
-        session["team2_which"] = which[0]
+        session["team2_which"] = which[1]
+        #hide gif
 
     if request.method == "POST":
         print("post")
@@ -133,24 +147,28 @@ def menu():
         cost = len(indices)
         db = sqlite3.connect(DB_FILE)
         c = db.cursor()
-        rizu_coin = c.execute("SELECT rizu_coin FROM users WHERE name=?", (session['username'],)).fetchone()
+        rizu_coin = c.execute("SELECT rizu_coin FROM users WHERE name=?", (session['username'],)).fetchone()[0]
         if rizu_coin < cost:
             return redirect(url_for('menu'))
         for idx in indices:
             index = int(idx)
             if index <= 6:
                 print("swapped")
-                if session['which'] == "anime":
+                if session['team1_which'] == "anime":
                     session['team1'][index - 1] = get_anime_character(0)
                 else:
                     session['team1'][index - 1] = get_superhero(0)
             else:
                 print("swapped")
-                if session['which'] == "anime":
-                    session['team2'][index - 7] = get_superhero(0)
-                else:
+                if session['team2_which'] == "anime":
                     session['team2'][index - 7] = get_anime_character(0)
+                else:
+                    session['team2'][index - 7] = get_superhero(0)
             session.modified = True
+        # hide gif
+        c.execute("UPDATE users SET rizu_coin=? WHERE name=?", (rizu_coin-cost, session['username']))
+        db.commit()
+        db.close()
 
     return render_template('menu.html',
                            player = session["username"],
@@ -293,7 +311,7 @@ def game():
                         if index == -1:
                             db = sqlite3.connect(DB_FILE)
                             c = db.cursor()
-                            losses = c.execute("SELECT losses FROM users WHERE name=?", (session['username'],)).fetchone()
+                            losses = c.execute("SELECT losses FROM users WHERE name=?", (session['username'],)).fetchone()[0]
                             c.execute("UPDATE users SET losses=? WHERE name=?", (losses+1, session['username']))
                             db.commit()
                             db.close()
