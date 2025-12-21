@@ -4,8 +4,7 @@
 # P01: ArRESTed Development
 # Dec 2025
 
-import random, math
-from apis import get_superhero, get_anime_character, get_superhero2
+import math
 
 def attack(attacker, defender, move_name):
     defense = defender['def']
